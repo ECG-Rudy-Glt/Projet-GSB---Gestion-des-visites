@@ -1,0 +1,14 @@
+{
+    "name": "ecole/gsb-visits-manager",
+    "type": "project",
+    "license": "None",
+    "autoload": {
+        "psr-4": {
+            "Ecole\\GsbVisitsManager\\": "lib/"
+        }
+    },
+    "minimum-stability": "stable",
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^3.7"
+    }
+}
