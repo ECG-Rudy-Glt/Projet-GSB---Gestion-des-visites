@@ -2,16 +2,17 @@
 <ruleset name="MyCustomStandard">
     <description>Mon standard de codage personnalisé.</description>
 
+    <!-- Exclure les dossiers spécifiques -->
     <exclude-pattern>vendor/</exclude-pattern>
 
+    <!-- Règles de base PSR-1 -->
     <rule ref="PSR1"/>
 
-    <rule ref="Generic.WhiteSpace.DisallowSpaceIndent">
-        <properties>
-            <property name="useTabs" value="true"/>
-        </properties>
-    </rule>
+    <!-- Interdire l'indentation avec des espaces -->
+    <rule ref="Generic.WhiteSpace.DisallowSpaceIndent"/>
 
+
+    <!-- Limiter la longueur de ligne à 100 caractères -->
     <rule ref="Generic.Files.LineLength">
         <properties>
             <property name="lineLimit" value="100"/>
@@ -19,11 +20,7 @@
         </properties>
     </rule>
 
-    <rule ref="PSR1.Classes.ClassDeclaration"/>
-    <rule ref="PSR1.Methods.CamelCapsMethodName"/>
-
-    <rule ref="PSR2.Classes.ClassDeclaration"/>
-
+    <!-- Autres règles pour le nommage et la structure -->
     <rule ref="Squiz.ControlStructures.ControlSignature"/>
     <rule ref="Generic.Formatting.DisallowMultipleStatements"/>
     <rule ref="Squiz.NamingConventions.ValidVariableName"/>

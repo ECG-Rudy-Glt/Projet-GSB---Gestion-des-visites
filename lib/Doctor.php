@@ -9,27 +9,35 @@
  */
 
 namespace Ecole\GsbVisitsManager;
- 
- 
- class Doctor
- {
-     private $name;
-     private $specialty;
- 
-     public function __construct($name, $specialty)
-     {
-         $this->name = $name;
-         $this->specialty = $specialty;
-     }
- 
-     public function getName()
-     {
-         return $this->name;
-     }
- 
-     public function getSpecialty()
-     {
-         return $this->specialty;
-     }
- }
- 
+
+class Doctor
+{
+	private $_name;
+	private $_specialty;
+
+	public function __construct($_name, $_specialty)
+	{
+		$this->_name = $_name;
+		$this->_specialty = $_specialty;
+	}
+
+	/**
+	 * Get the name of the doctor.
+	 *
+	 * @return string
+	 */
+	public function getName()
+	{
+		return $this->_name;
+	}
+
+	/**
+	 * Get the specialty of the doctor.
+	 *
+	 * @return string
+	 */
+	public function getSpecialty()
+	{
+		return $this->_specialty;
+	}
+}
