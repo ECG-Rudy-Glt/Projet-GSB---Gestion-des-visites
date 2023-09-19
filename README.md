@@ -62,3 +62,50 @@ Scénario étendu :
     8) Le système retourne tous ses rapports
     9) Le visiteur demande à modifier certains champs concernant des informations du médecin
     10) Le système enregistre ces modifications
+
+    ____________________________________________________________________________
+    |                   UTILISATION ET INSTALLATION CODESNIFFER                |
+    |__________________________________________________________________________|
+
+    'Configuration de l'environnement de développement'
+Afin de garantir la qualité et la cohérence du code, nous utilisons plusieurs outils et extensions. Veuillez suivre les étapes ci-dessous pour configurer correctement votre environnement de développement.
+
+'1. Extensions requises'
+Installez les extensions suivantes pour votre éditeur de code :
+
+PHP CodeSniffer (phpcs) : Assure la conformité de notre code avec les normes de codage PHP.
+(Autres extensions pertinentes) : 
+- PHPCBF
+- Prettier
+- XML / XML Tools
+
+'2. Installation de PHP CodeSniffer via CLI'
+Si vous ne l'avez pas déjà fait, installez Composer, le gestionnaire de dépendances PHP.
+
+utiliser ces CLI:
+
+curl -sS https://getcomposer.org/installer | php
+mv composer.phar /usr/local/bin/composer
+
+Ensuite, naviguez vers le répertoire du projet et installez les dépendances avec Composer :
+
+cd /chemin/vers/votre/projet
+composer install
+
+Cela installera PHP CodeSniffer et d'autres dépendances nécessaires.
+
+'3. Configuration de l'éditeur'
+
+Assurez-vous que votre éditeur est configuré pour utiliser les normes de codage définies dans le fichier phpcs.xml du projet. Si vous utilisez Visual Studio Code, par exemple, vous devrez peut-être ajuster les paramètres pour pointer vers le bon chemin d'installation de phpcs.
+
+'4. Vérification de la configuration'
+Après avoir configuré votre environnement, exécutez la commande suivante pour vérifier que tout est correctement configuré :
+
+./vendor/bin/phpcs --standard=phpcs.xml /chemin/vers/votre/fichier.php
+
+Si tout est correctement configuré, phpcs analysera votre fichier et signalera les erreurs ou avertissements de codage.
+
+'5. Contribution'
+
+Lorsque vous contribuez au projet, assurez-vous que votre code est conforme aux normes de codage avant de soumettre une pull request. Cela garantit la qualité du code et facilite la revue du code.
+
