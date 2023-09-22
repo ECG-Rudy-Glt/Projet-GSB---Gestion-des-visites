@@ -1,0 +1,67 @@
+<!--
+Filename: /Users/Ecole/Documents/sio2/Projet-GSB---Gestion-des-visites/mvc/index.html
+Path: /Users/Ecole/Documents/sio2/Projet-GSB---Gestion-des-visites/mvc
+Created Date: Thursday, September 21st 2023, 11:19:41 pm
+Author: Rudy GAULT
+
+Copyright (c) 2023 H2V Solutions
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <head>
+        <title>Laboratoire Pharmaceutique - Gestion des Visites</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    
+</head>
+<body>
+
+    <h1>Gestion des Visites Médicales</h1>
+
+    <!-- Section pour gérer les rapports de visite -->
+    <section id="rapports">
+        <h2>Gérer les Rapports de Visite</h2>
+        <form id="nouveauRapport">
+            <label for="medecin">Médecin:</label>
+            <select name="medecin" id="medecin">
+                <option value="medecin1">Dr. Dupont</option>
+                <option value="medecin2">Dr. Martin</option>
+                <!-- Ajouter d'autres médecins ici -->
+            </select><br>
+
+            <label for="date">Date de la visite:</label>
+            <input type="date" id="date" name="date"><br>
+
+            <label for="motif">Motif:</label>
+            <input type="text" id="motif" name="motif"><br>
+
+            <label for="medicaments">Médicaments présentés:</label>
+            <input type="text" id="medicaments" name="medicaments"><br>
+
+            <label for="echantillons">Nombre d'échantillons offerts:</label>
+            <input type="number" id="echantillons" name="echantillons"><br>
+
+            <label for="bilan">Bilan:</label>
+            <textarea id="bilan" name="bilan"></textarea><br>
+
+            <input type="submit" value="Valider">
+        </form>
+    </section>
+
+    <!-- Section pour gérer les médecins -->
+    <section id="medecins">
+        <h2>Gérer les Médecins</h2>
+        <form id="infoMedecin">
+            <label for="rechercheMedecin">Rechercher un médecin:</label>
+            <input type="text" id="rechercheMedecin" name="rechercheMedecin"><br>
+
+            <input type="submit" value="Valider">
+        </form>
+
+        <!-- Ici, on pourrait ajouter un espace pour afficher les informations du médecin -->
+    </section>
+
+</body>
+</html>

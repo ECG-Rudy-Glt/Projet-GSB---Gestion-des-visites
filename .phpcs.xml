@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<ruleset name="MonProjet">
+    <description>Les règles de codage pour mon projet.</description>
+
+    <!-- Exemple de règles -->
+    <rule ref="PSR2"/>
+    <rule ref="Generic.Arrays.DisallowShortArraySyntax"/>
+</ruleset>
