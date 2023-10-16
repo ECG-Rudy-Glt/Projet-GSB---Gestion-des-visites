@@ -41,10 +41,17 @@
         margin-top: 10px;
         text-align: center;
     }
+    #login-image {
+        display: block;
+        margin: 0 auto 20px;
+        max-width: 20%;  /* Réduction de la largeur de l'image */
+        border-radius: 50%;  /* Bords arrondis */
+    }
 </style>
 </head>
 <body>
 <div id="login-container">
+    <img id="login-image" src="../../img/pageConnection.png" alt="Image de connexion">
     <form id="login-form">
         <input type="email" name="email" placeholder="Adresse mail" required>
         <input type="password" name="password" placeholder="Mot de passe" required>
@@ -54,3 +61,4 @@
 </div>
 </body>
 </html>
+

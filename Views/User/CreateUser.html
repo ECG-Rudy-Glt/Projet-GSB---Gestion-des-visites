@@ -1,0 +1,69 @@
+<!--
+Filename: /Users/Ecole/Documents/sio2/Projet-GSB---Gestion-des-visites/Views/User/CreateUser.html
+Path: /Users/Ecole/Documents/sio2/Projet-GSB---Gestion-des-visites/Views/User
+Created Date: Monday, October 16th 2023, 4:51:43 pm
+Author: Rudy GAULT
+
+Copyright (c) 2023 H2V Solutions
+-->
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Création de Compte</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        overflow: auto;
+    }
+    #account-container {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        max-width: 500px;
+        width: 100%;
+    }
+    #account-container input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    #account-container button {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #008CBA;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+    }
+</style>
+</head>
+<body>
+<div id="account-container">
+    <form id="account-form">
+        <input type="text" name="firstName" placeholder="Prénom" required>
+        <input type="text" name="lastName" placeholder="Nom" required>
+        <input type="text" name="street" placeholder="Rue" required>
+        <input type="text" name="postalCode" placeholder="Code Postal" required>
+        <input type="text" name="city" placeholder="Ville" required>
+        <input type="text" name="department" placeholder="Département" required>
+        <input type="text" name="country" placeholder="Pays" required>
+        <input type="tel" name="phone" placeholder="Téléphone" required>
+        <input type="password" name="password" placeholder="Mot de passe" required>
+        <button type="submit">Créer un Compte</button>
+    </form>
+</div>
+</body>
+</html>
