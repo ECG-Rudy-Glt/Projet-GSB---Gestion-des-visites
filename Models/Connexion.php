@@ -1,11 +1,7 @@
 
 <?php
 
-
 ##CHANGER LE ROOT
-
-
-
 
 try {
     $host = 'localhost'; // Adresse du serveur MySQL
@@ -22,7 +18,8 @@ try {
 
 
     // Le reste de votre code pour interagir avec la base de données va ici
-    echo "GG EZ";
+    include 'C:\wamp64\www\Projet-GSB---Gestion-des-visites\Views\User\CreateUser.html';
+
 } catch (PDOException $e) {
     echo "Erreur de connexion à la base de données : " . $e->getMessage();
 }
