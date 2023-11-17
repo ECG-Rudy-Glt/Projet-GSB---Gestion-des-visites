@@ -17,6 +17,7 @@ $medicaments = $medicamentModel->getAllMedicaments();
 <head>
     <title>Créer un Rapport de Visite</title>
     <!-- Inclure le CSS ici si nécessaire -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <h2>Créer un Nouveau Rapport de Visite</h2>
@@ -47,13 +48,14 @@ $medicaments = $medicamentModel->getAllMedicaments();
         <!-- Sélection des médicaments -->
         <h3>Médicaments</h3>
         <?php foreach ($medicaments as $medicament): ?>
-            <div>
-                <input type="checkbox" name="selectedMedicaments[]" value="<?php echo $medicament['id']; ?>" id="med-<?php echo $medicament['id']; ?>">
-                <label for="med-<?php echo $medicament['id']; ?>">
-                    <?php echo $medicament['nomcommercial']; ?>
-                </label>
-                Quantité :
-                <input type="number" name="quantities[<?php echo $medicament['id']; ?>]" min="0">
+            <div class="medicament-item">
+                <div class="checkbox-container">
+                    <input type="checkbox" name="selectedMedicaments[]" value="<?php echo $medicament['id']; ?>" id="med-<?php echo $medicament['id']; ?>">
+                    <label for="med-<?php echo $medicament['id']; ?>"><?php echo $medicament['nomcommercial']; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                    <!-- Ajout de Quantité ici -->
+                    Quantité :&nbsp;&nbsp;&nbsp;
+                    <input type="number" name="quantities[<?php echo $medicament['id']; ?>]" min="0">
+                </div>
             </div>
         <?php endforeach; ?>
 
