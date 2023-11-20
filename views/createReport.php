@@ -36,7 +36,7 @@ $medicaments = $medicamentModel->getAllMedicaments();
         <input type="date" name="date" id="date" required>
         <br>
 
-        <!-- Entrée des détails du rapport -->
+        <!-- Entrée des détails du rapport -->  
         <label for="motif">Motif :</label>
         <input type="text" name="motif" id="motif" required>
         <br>
@@ -51,7 +51,7 @@ $medicaments = $medicamentModel->getAllMedicaments();
             <div class="medicament-item">
                 <div class="checkbox-container">
                     <input type="checkbox" name="selectedMedicaments[]" value="<?php echo $medicament['id']; ?>" id="med-<?php echo $medicament['id']; ?>">
-                    <label for="med-<?php echo $medicament['id']; ?>"><?php echo $medicament['nomcommercial']; ?></label>
+                    <label for="med-<?php echo $medicament['id']; ?>"><?php echo $medicament['nomcommercial']; ?></label>&nbsp;&nbsp;&nbsp;
                     <label class="quantity-label">Quantité :</label>
                     <input type="number" name="quantities[<?php echo $medicament['id']; ?>]" min="0">
                 </div>
