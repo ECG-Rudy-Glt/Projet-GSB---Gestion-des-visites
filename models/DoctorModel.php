@@ -62,11 +62,12 @@ class DoctorModel {
         return $stmt->fetchAll(PDO::FETCH_ASSOC); // Retourne tous les médecins avec noms et prénoms
     }    
     // Méthode requete pour afficher tous les rapports du médecin demandé
-    public function getDoctorsWithFiches() {
-        $stmt = $this->db->prepare("SELECT m.id, p.name, p.surname, f.details FROM medecin m JOIN personne p ON m.idpersonne = p.id LEFT JOIN fiche_medecin f ON m.id = f.medecin_id");
+    public function getReportDetails() {
+        $stmt = $this->db->prepare("SELECT m.id as medecinId, p.name as medecinName, p.surname as medecinSurname, s.libelle as specialite, r.motif, r.bilan, r.date, pv.name as visiteurName, pv.surname as visiteurSurname FROM rapport r JOIN medecin m ON r.idmedecin = m.id JOIN personne p ON m.idpersonne = p.id JOIN specialite s ON m.specialite = s.id JOIN visiteur v ON r.idvisiteur = v.id JOIN personne pv ON v.idpersonne = pv.id");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
+    }      
+    
 }
     
 ?>

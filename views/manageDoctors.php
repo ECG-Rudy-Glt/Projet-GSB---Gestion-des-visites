@@ -10,11 +10,12 @@ foreach ($allDoctors as $doctor) {
 }
 
 
-$doctorsWithFiches = $doctorModel->getDoctorsWithFiches();
+$reportDetails = $doctorModel->getReportDetails();
 
-foreach ($doctorsWithFiches as $doctor) {
-    echo "ID: " . $doctor['id'] . ", Nom: " . $doctor['name'] . ", Prénom: " . $doctor['surname'] . ", Fiche: " . $doctor['details'] . "<br>";
+foreach ($reportDetails as $report) {
+    echo "Médecin: " . $report['medecinName'] . " " . $report['medecinSurname'] . ", Spécialité: " . $report['specialite'] . ", Visiteur: " . $report['visiteurName'] . " " . $report['visiteurSurname'] . ", Motif: " . $report['motif'] . ", Bilan: " . $report['bilan'] . ", Date: " . $report['date'] . "<br>";
 }
+
 
 
 ?>
