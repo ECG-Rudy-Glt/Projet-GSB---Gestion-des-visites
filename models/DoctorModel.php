@@ -55,12 +55,18 @@ class DoctorModel {
             return false; // Ou gérer l'erreur comme nécessaire
         }
     }
-    // Méthode pour supprimer un mé
+    // Méthode pour afficher les médecins
     public function getAllDoctors() {
         $stmt = $this->db->prepare("SELECT personne.name, personne.surname FROM medecin JOIN personne ON medecin.idpersonne = personne.id");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC); // Retourne tous les médecins avec noms et prénoms
     }    
-    
+    // Méthode requete pour afficher tous les rapports du médecin demandé
+    public function getDoctorsWithFiches() {
+        $stmt = $this->db->prepare("SELECT m.id, p.name, p.surname, f.details FROM medecin m JOIN personne p ON m.idpersonne = p.id LEFT JOIN fiche_medecin f ON m.id = f.medecin_id");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
+    
 ?>
