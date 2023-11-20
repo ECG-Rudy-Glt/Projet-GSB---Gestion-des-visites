@@ -37,9 +37,15 @@ input, select, textarea {
 
 .checkbox-container {
     display: flex;
-
-    justify-content: space-between; /* Espacer les éléments horizontalement */
+    align-items: center; /* This will vertically align the checkbox, label, and input */
+    justify-content: flex-start; /* This will align the elements to the start of the container */
+    gap: 10px; /* This creates space between the elements */
 }
+
+.quantity-label {
+    white-space: nowrap; /* This prevents the label from breaking into multiple lines */
+}
+
 
 input[type="submit"] {
     margin-right: 10px; /* Ajoute un espace à droite du bouton de soumission */

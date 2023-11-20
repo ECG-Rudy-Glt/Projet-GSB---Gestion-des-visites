@@ -51,12 +51,12 @@ $medicaments = $medicamentModel->getAllMedicaments();
             <div class="medicament-item">
                 <div class="checkbox-container">
                     <input type="checkbox" name="selectedMedicaments[]" value="<?php echo $medicament['id']; ?>" id="med-<?php echo $medicament['id']; ?>">
-                    <label for="med-<?php echo $medicament['id']; ?>"><?php echo $medicament['nomcommercial']; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                    <!-- Ajout de Quantité ici -->
-                    Quantité :&nbsp;&nbsp;&nbsp;
+                    <label for="med-<?php echo $medicament['id']; ?>"><?php echo $medicament['nomcommercial']; ?></label>
+                    <label class="quantity-label">Quantité :</label>
                     <input type="number" name="quantities[<?php echo $medicament['id']; ?>]" min="0">
                 </div>
             </div>
+
         <?php endforeach; ?>
 
         <!-- Bouton de soumission -->
