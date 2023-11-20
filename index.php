@@ -4,6 +4,7 @@
  <head>
 	 <title>GSB - Gestion des Visites</title>
 	 <!-- Ajouter des liens vers CSS si nécessaire -->
+	 <link rel="stylesheet" href="PageAcceuil.css">
  </head>
  <body>
 	 <h1>Bienvenue dans le système de gestion des visites GSB</h1>
