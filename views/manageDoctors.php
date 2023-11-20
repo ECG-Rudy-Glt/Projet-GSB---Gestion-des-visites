@@ -1,78 +1,69 @@
 <?php
-
 include_once '../models/DoctorModel.php';
-$dbConnexion = '..';
-$allDoctors = $doctorModel->getAllDoctors(); // Appeler la méthode getAllDoctors
 
-// Afficher les résultats
-foreach ($allDoctors as $doctor) {
-    echo "Nom: " . $doctor['name'] . ", Prénom: " . $doctor['surname'] . "<br>";
+$doctorModel = new DoctorModel($dbConnection);
+
+// Vérifie si le bouton "Afficher tous les médecins" a été cliqué
+if (isset($_GET['showAll']) && $_GET['showAll'] === 'true') {
+    // Récupérez tous les médecins
+    isset($_GET['showAll']) && $_GET['showAll'] === 'flase';
+    $allDoctors = $doctorModel->getAllDoctors();
 }
 
+// Initialise une variable pour savoir si des résultats de recherche existent
+$searchResultsExist = false;
 
-$reportDetails = $doctorModel->getReportDetails();
+// Si une recherche a été effectuée
+if (isset($_GET['search'])) {
+    $searchTerm = $_GET['search'];
 
-foreach ($reportDetails as $report) {
-    echo "Médecin: " . $report['medecinName'] . " " . $report['medecinSurname'] . ", Spécialité: " . $report['specialite'] . ", Visiteur: " . $report['visiteurName'] . " " . $report['visiteurSurname'] . ", Motif: " . $report['motif'] . ", Bilan: " . $report['bilan'] . ", Date: " . $report['date'] . "<br>";
+    // Vérifie si la barre de recherche n'est pas vide
+    if (!empty($searchTerm)) {
+        // Utilisez $searchTerm dans votre requête SQL pour filtrer les résultats
+        $results = $doctorModel->getReportDetails($searchTerm);
+
+        // Vérifie s'il y a des résultats
+        if (!empty($results)) {
+            // Affichez les résultats
+            echo '<h2>Résultats de la recherche :</h2>';
+            foreach ($results as $result) {
+                echo "Médecin: " . $result['medecinName'] . " " . $result['medecinSurname'] . ", Spécialité: " . $result['specialite'] . ", Visiteur: " . $result['visiteurName'] . " " . $result['visiteurSurname'] . ", Motif: " . $result['motif'] . ", Bilan: " . $result['bilan'] . ", Date: " . $result['date'] . "<br>";
+            }
+            // Indique que des résultats de recherche existent
+            $searchResultsExist = true;
+        }
+    }
 }
 
-
-
+// La boucle pour afficher tous les médecins, mais seulement si aucun résultat de recherche n'existe
+if (!$searchResultsExist) {
+    echo '<h2>Tous les médecins :</h2>';
+    $allDoctors = $doctorModel->getAllDoctors();
+    foreach ($allDoctors as $doctor) {
+        // Affichage des détails du médecin
+        echo '<p>' . $doctor['name'] . ' ' . $doctor['surname'] . '</p>';
+    }
+}
 ?>
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <title>GSB - Gestion des Médecins</title>
+    <link rel="stylesheet" href="./Doctors.css">
     <!-- Liens vers vos fichiers CSS et autres ressources si nécessaire -->
 </head>
 <body>
     <h1>Gestion des Médecins</h1>
 
     <!-- Formulaire de recherche -->
-    <form action="" method="get">
-        <label for="search">Rechercher un médecin :</label>
-        <input type="text" id="search" name="search" placeholder="Nom du médecin">
-        <button type="submit">Rechercher</button>
-    </form>
-
-    <!-- Affichage des médecins -->
-    <div class="doctors-list">
-        <?php
-        // Votre logique PHP pour se connecter à la base de données
-
-        // Vérifie si une recherche a été effectuée
-        if (isset($_GET['search'])) {
-            $searchTerm = $_GET['search'];
-            // Utilisez $searchTerm dans votre requête SQL pour filtrer les résultats
-            // Exemple de requête :
-            // SELECT personne.name, personne.surname
-            // FROM medecin
-            // INNER JOIN personne ON medecin.idpersonne = personne.id
-            // WHERE (personne.name LIKE '$searchTerm%' OR personne.surname LIKE '$searchTerm%')
-            //   AND (personne.name IS NOT NULL AND personne.surname IS NOT NULL)
-            // Executez la requête et récupérez les résultats
-            $results = []; // Remplacez ceci avec les résultats réels de votre requête SQL
-        } else {
-            // Si aucune recherche n'a été effectuée, récupérez tous les médecins
-            // Exemple de requête :
-            // SELECT personne.name, personne.surname
-            // FROM personne
-            // WHERE personne.name IS NOT NULL AND personne.surname IS NOT NULL
-            // Executez la requête et récupérez les résultats
-            $results = []; // Remplacez ceci avec les résultats réels de votre requête SQL
-        }
-
-        // La boucle pour afficher les médecins
-        foreach ($results as $result) {
-            // Affichage des détails du médecin
-            echo '<p>' . $result['name'] . ' ' . $result['surname'] . '</p>';
-        }
-        ?>
-    </div>
+<form action="" method="get">
+    <label for="search">Rechercher un médecin :</label>
+    <input type="text" id="search" name="search" placeholder="Nom du médecin">
+    <button type="submit">Rechercher</button>
+    
+    <!-- Bouton pour afficher tous les médecins -->
+    <a href="?showAll=true"><button type="button">Afficher tous les médecins</button></a>
+</form>
 </body>
 </html>
-<?php
-// Assurez-vous de fermer votre connexion à la base de données après avoir récupéré les résultats
-?>

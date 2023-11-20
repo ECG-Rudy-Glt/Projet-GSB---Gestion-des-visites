@@ -57,17 +57,52 @@ class DoctorModel {
     }
     // Méthode pour afficher les médecins
     public function getAllDoctors() {
-        $stmt = $this->db->prepare("SELECT personne.name, personne.surname FROM medecin JOIN personne ON medecin.idpersonne = personne.id");
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC); // Retourne tous les médecins avec noms et prénoms
-    }    
-    // Méthode requete pour afficher tous les rapports du médecin demandé
-    public function getReportDetails() {
-        $stmt = $this->db->prepare("SELECT m.id as medecinId, p.name as medecinName, p.surname as medecinSurname, s.libelle as specialite, r.motif, r.bilan, r.date, pv.name as visiteurName, pv.surname as visiteurSurname FROM rapport r JOIN medecin m ON r.idmedecin = m.id JOIN personne p ON m.idpersonne = p.id JOIN specialite s ON m.specialite = s.id JOIN visiteur v ON r.idvisiteur = v.id JOIN personne pv ON v.idpersonne = pv.id");
+        $stmt = $this->db->prepare("SELECT DISTINCT name, surname FROM medecin JOIN personne ON medecin.idpersonne = personne.id");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }      
-    
+    }  
+    // Méthode requete pour afficher tous les rapports du médecin demandé
+    public function getReportDetails($searchTerm = null)
+{
+    // Construction de la requête SQL de base
+    $query = "SELECT m.id as medecinId, p.name as medecinName, p.surname as medecinSurname, s.libelle as specialite, r.motif, r.bilan, r.date, pv.name as visiteurName, pv.surname as visiteurSurname 
+              FROM rapport r 
+              JOIN medecin m ON r.idmedecin = m.id 
+              JOIN personne p ON m.idpersonne = p.id 
+              JOIN specialite s ON m.specialite = s.id 
+              JOIN visiteur v ON r.idvisiteur = v.id 
+              JOIN personne pv ON v.idpersonne = pv.id";
+
+    // Si un terme de recherche est fourni, ajoutez une clause WHERE à la requête
+    if ($searchTerm !== null) {
+        $query .= " WHERE p.name LIKE '%$searchTerm%' OR p.surname LIKE '%$searchTerm%'";
+    }
+
+    // Préparez et exécutez la requête
+    $stmt = $this->db->prepare($query);
+    $stmt->execute();
+
+    // Récupérez les résultats
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Retournez directement le tableau associatif
+    return $results;
 }
+
+    public function searchDoctorsByTerm($searchTerm)
+    {
+    // Assurez-vous d'ajuster la requête SQL en fonction de votre structure de base de données
+    $query = "SELECT medecin.*
+              FROM medecin
+              JOIN personne ON medecin.idpersonne = personne.id
+              WHERE personne.name LIKE '%$searchTerm%'
+                 OR personne.surname LIKE '%$searchTerm%'";
+    
+    // Exécutez la requête et récupérez les résultats
+    $results = $this->db->query($query)->fetchAll(PDO::FETCH_ASSOC);
+
+    return $results;
+    
+}}
     
 ?>
