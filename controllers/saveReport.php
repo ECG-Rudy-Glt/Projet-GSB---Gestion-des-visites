@@ -6,11 +6,13 @@ require_once '../config.php'; // Assurez-vous d'inclure votre fichier de configu
 require_once '../models/RapportModel.php';
 // Incluez d'autres modèles si nécessaire
 require_once '../views/createReport.php';
+require_once '../views/style.css';
 
 
 $rapportModel = new RapportModel($dbConnection);
 
 // Récupérer les données du formulaire
+$idVisiteur = $_POST['idVisiteur'];
 $medecinId = $_POST['doctor'];
 $date = $_POST['date'];
 $motif = $_POST['motif'];
@@ -18,10 +20,16 @@ $bilan = $_POST['bilan'];
 $selectedMedicaments = $_POST['selectedMedicaments'] ?? [];
 $quantities = $_POST['quantities'] ?? [];
 
+if (empty($idVisiteur)) {
+    // Gérer le cas où l'ID du visiteur n'est pas défini ou est vide
+    echo "ID du visiteur manquant.";
+    exit;
+}
+
 // Valider les données (à compléter selon vos besoins)
 
 // Enregistrer le rapport
-$rapportId = $rapportModel->create($medecinId, $date, $motif, $bilan);
+$rapportId = $rapportModel->create($idVisiteur, $medecinId, $date, $motif, $bilan);
 if ($rapportId) {
     // Enregistrer les médicaments offerts si nécessaire
     foreach ($selectedMedicaments as $medicamentId) {
