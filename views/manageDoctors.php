@@ -3,46 +3,27 @@ include_once '../models/DoctorModel.php';
 
 $doctorModel = new DoctorModel($dbConnection);
 
-// Vérifie si le bouton "Afficher tous les médecins" a été cliqué
-if (isset($_GET['showAll']) && $_GET['showAll'] === 'true') {
-    // Récupérez tous les médecins
-    isset($_GET['showAll']) && $_GET['showAll'] === 'flase';
-    $allDoctors = $doctorModel->getAllDoctors();
-}
+// Récupération des médecins pour la liste déroulante
+$allDoctors = $doctorModel->getAllDoctors();
 
-// Initialise une variable pour savoir si des résultats de recherche existent
 $searchResultsExist = false;
+$selectedDoctorReports = [];
 
 // Si une recherche a été effectuée
 if (isset($_GET['search'])) {
     $searchTerm = $_GET['search'];
-
-    // Vérifie si la barre de recherche n'est pas vide
     if (!empty($searchTerm)) {
-        // Utilisez $searchTerm dans votre requête SQL pour filtrer les résultats
         $results = $doctorModel->getReportDetails($searchTerm);
-
-        // Vérifie s'il y a des résultats
         if (!empty($results)) {
-            // Affichez les résultats
-            echo '<h2>Résultats de la recherche :</h2>';
-            foreach ($results as $result) {
-                echo "Médecin: " . $result['medecinName'] . " " . $result['medecinSurname'] . ", Spécialité: " . $result['specialite'] . ", Visiteur: " . $result['visiteurName'] . " " . $result['visiteurSurname'] . ", Motif: " . $result['motif'] . ", Bilan: " . $result['bilan'] . ", Date: " . $result['date'] . "<br>";
-            }
-            // Indique que des résultats de recherche existent
             $searchResultsExist = true;
         }
     }
 }
 
-// La boucle pour afficher tous les médecins, mais seulement si aucun résultat de recherche n'existe
-if (!$searchResultsExist) {
-    echo '<h2>Tous les médecins :</h2>';
-    $allDoctors = $doctorModel->getAllDoctors();
-    foreach ($allDoctors as $doctor) {
-        // Affichage des détails du médecin
-        echo '<p>' . $doctor['name'] . ' ' . $doctor['surname'] . '</p>';
-    }
+// Si un médecin est sélectionné dans la liste déroulante
+if (isset($_GET['doctorSelect']) && $_GET['doctorSelect'] != '') {
+    $selectedDoctorId = $_GET['doctorSelect'];
+    $selectedDoctorReports = $doctorModel->getReportDetailsById($selectedDoctorId);
 }
 ?>
 <!DOCTYPE html>
@@ -51,19 +32,89 @@ if (!$searchResultsExist) {
     <meta charset="UTF-8">
     <title>GSB - Gestion des Médecins</title>
     <link rel="stylesheet" href="./Doctors.css">
-    <!-- Liens vers vos fichiers CSS et autres ressources si nécessaire -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+        header, footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+        th {
+            background-color: #eee;
+        }
+        a {
+            color: blue;
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
     <h1>Gestion des Médecins</h1>
 
-    <!-- Formulaire de recherche -->
-<form action="" method="get">
-    <label for="search">Rechercher un médecin :</label>
-    <input type="text" id="search" name="search" placeholder="Nom du médecin">
-    <button type="submit">Rechercher</button>
-    
-    <!-- Bouton pour afficher tous les médecins -->
-    <a href="?showAll=true"><button type="button">Afficher tous les médecins</button></a>
-</form>
+    <form action="" method="get">
+        <label for="search">Rechercher un médecin :</label>
+        <input type="text" id="search" name="search" placeholder="Nom du médecin">
+        <button type="submit">Rechercher</button>
+
+        <label for="doctorSelect">Ou sélectionnez un médecin :</label>
+        <select id="doctorSelect" name="doctorSelect">
+            <option value="">Choisissez un médecin</option>
+            <?php foreach ($allDoctors as $doctor): ?>
+                <option value="<?php echo $doctor['id']; ?>">
+                    <?php echo $doctor['name'].' '.$doctor['surname']; ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+        <button type="submit">Afficher Rapports</button>
+    </form>
+
+    <?php if ($searchResultsExist): ?>
+        <h2>Résultats de la recherche :</h2>
+        <?php foreach ($results as $result): ?>
+            <p>
+                Médecin: <?php echo $result['medecinName'] . " " . $result['medecinSurname'] . ", Spécialité: " . $result['specialite'] . ", Visiteur: " . $result['visiteurName'] . " " . $result['visiteurSurname'] . ", Motif: " . $result['motif'] . ", Bilan: " . $result['bilan'] . ", Date: " . $result['date']; ?>
+                <a href="../views/editReport.php?reportId=<?php echo $result['id']; ?>">Modifier</a>
+            </p>
+        <?php endforeach; ?>
+    <?php elseif (!empty($selectedDoctorReports)): ?>
+        <h2>Rapports pour le médecin sélectionné :</h2>
+        <?php foreach ($selectedDoctorReports as $report): ?>
+            <p>
+                Médecin: <?php echo $report['medecinName'] . " " . $report['medecinSurname'] . ", Spécialité: " . $report['specialite'] . ", Visiteur: " . $report['visiteurName'] . " " . $report['visiteurSurname'] . ", Motif: " . $report['motif'] . ", Bilan: " . $report['bilan'] . ", Date: " . $report['date']; ?>
+                <a href="../views/editReport.php?reportId=<?php echo $report['id']; ?>">Modifier</a>
+            </p>
+        <?php endforeach; ?>
+    <?php endif; ?>
+
+    <footer>
+        <p>GSB © 2023</p>
+    </footer>
 </body>
 </html>
