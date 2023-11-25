@@ -117,6 +117,19 @@ public function getReportDetailsById($searchTerm = null)
             return null;
         }
     }
-}
+    public function getDoctorEmailByName($prenom, $nom) {
+        $query = "SELECT email FROM medecin
+                  JOIN personne ON medecin.idpersonne = personne.id
+                  WHERE personne.name = :prenom AND personne.surname = :nom";
     
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':prenom', $prenom, PDO::PARAM_STR);
+        $stmt->bindParam(':nom', $nom, PDO::PARAM_STR);
+        
+        if ($stmt->execute()) {
+            return $stmt->fetch(PDO::FETCH_ASSOC)['email'];
+        } else {
+            return null;
+        }
+    }}
 ?>

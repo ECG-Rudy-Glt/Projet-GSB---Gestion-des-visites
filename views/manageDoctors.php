@@ -1,15 +1,28 @@
 <?php
 include_once '../models/DoctorModel.php';
 
-
 $doctorModel = new DoctorModel($dbConnection);
 
-function displaySearchResults($results, $searchResultsExist) {
+function displaySearchResults($results, $searchResultsExist, $doctorModel) {
     echo '<h2>Résultats de la recherche :</h2>';
+    echo '<table>';
+
     if ($searchResultsExist) {
-        echo '<table>';
-        echo '<tr><th>Médecin</th><th>Spécialité</th><th>Visiteur</th><th>Motif</th><th>Bilan</th><th>Date</th></tr>';
+        $firstMedecin = true; // Ajout de cette variable pour suivre la première ligne du médecin
+
         foreach ($results as $result) {
+            // Afficher l'e-mail du médecin en haut du tableau
+            if (!isset($emailDisplayed)) {
+                $doctorEmail = $doctorModel->getDoctorEmailByName($result['medecinName'], $result['medecinSurname']);
+                echo "<tr><td colspan='6'>Email du médecin : <a href='mailto:$doctorEmail'>$doctorEmail</a></td></tr>";
+                $emailDisplayed = true;
+            }
+
+            if ($firstMedecin) {
+                echo '<tr><th>Médecin</th><th>Spécialité</th><th>Visiteur</th><th>Motif</th><th>Bilan</th><th>Date</th></tr>';
+                $firstMedecin = false;
+            }
+
             echo "<tr>";
             echo "<td>{$result['medecinName']} {$result['medecinSurname']}</td>";
             echo "<td>{$result['specialite']}</td>";
@@ -35,11 +48,21 @@ function displaySearchResults($results, $searchResultsExist) {
                 }
             }
         }
-        echo '</table>';
     } else {
-        echo "Aucun rapport disponible pour ce médecin.";
+        $selectedDoctor = $_GET['search'];
+        $nameParts = explode(' ', $selectedDoctor);
+        $prenom = $nameParts[0];
+        $nom = $nameParts[1];
+
+        $doctorEmail = $doctorModel->getDoctorEmailByName($prenom, $nom);
+
+        // Affiche le mail et le message d'erreur dans le tableau
+        echo "<tr><td colspan='6'>Email du médecin : <a href='mailto:$doctorEmail'>$doctorEmail</a></td></tr>";
+        echo "<tr><td colspan='6'>Aucun rapport disponible pour ce médecin.</td></tr>";
     }
+    echo '</table>';
 }
+
 
 // Initialise une variable pour savoir si des résultats de recherche existent
 $searchResultsExist = false;
@@ -106,7 +129,7 @@ if (isset($_GET['search'])) {
     <!-- Appel de la fonction d'affichage des résultats de recherche -->
     <?php
     if (isset($_GET['search'])) {
-        displaySearchResults($results, $searchResultsExist);
+        displaySearchResults($results, $searchResultsExist, $doctorModel);
     }
     ?>
 </body>
