@@ -3,118 +3,92 @@ include_once '../models/DoctorModel.php';
 
 $doctorModel = new DoctorModel($dbConnection);
 
-// Récupération des médecins pour la liste déroulante
-$allDoctors = $doctorModel->getAllDoctors();
-
+// Initialise une variable pour savoir si des résultats de recherche existent
 $searchResultsExist = false;
-$selectedDoctorReports = [];
+$results = array(); // Initialisez le tableau des résultats
 
 // Si une recherche a été effectuée
 if (isset($_GET['search'])) {
-    $searchTerm = $_GET['search'];
-    if (!empty($searchTerm)) {
-        $results = $doctorModel->getReportDetails($searchTerm);
+    $selectedDoctor = $_GET['search'];
+
+    // Vérifie si le médecin sélectionné n'est pas vide
+    if (!empty($selectedDoctor)) {
+        // Utilisez $selectedDoctor dans votre requête SQL pour filtrer les résultats
+        // Divisez le prénom et le nom
+        $nameParts = explode(' ', $selectedDoctor);
+        $prenom = $nameParts[0];
+        $nom = $nameParts[1];
+
+        $results = $doctorModel->getReportDetailsById($prenom, $nom);
+
+        // Vérifie s'il y a des résultats
         if (!empty($results)) {
+            // Indique que des résultats de recherche existent
             $searchResultsExist = true;
         }
     }
 }
-
-// Si un médecin est sélectionné dans la liste déroulante
-if (isset($_GET['doctorSelect']) && $_GET['doctorSelect'] != '') {
-    $selectedDoctorId = $_GET['doctorSelect'];
-    $selectedDoctorReports = $doctorModel->getReportDetailsById($selectedDoctorId);
-}
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <title>GSB - Gestion des Médecins</title>
     <link rel="stylesheet" href="./Doctors.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-        .container {
-            width: 80%;
-            margin: auto;
-            overflow: hidden;
-        }
-        header, footer {
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            padding: 10px 0;
-        }
-        form {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 10px;
-            border: 1px solid #ccc;
-            text-align: left;
-        }
-        th {
-            background-color: #eee;
-        }
-        a {
-            color: blue;
-            text-decoration: none;
-        }
-    </style>
+    <!-- Liens vers vos fichiers CSS et autres ressources si nécessaire -->
 </head>
 <body>
     <h1>Gestion des Médecins</h1>
 
+    <!-- Formulaire de recherche -->
     <form action="" method="get">
-        <label for="search">Rechercher un médecin :</label>
-        <input type="text" id="search" name="search" placeholder="Nom du médecin">
-        <button type="submit">Rechercher</button>
+        <!-- Utilisez la liste déroulante pour sélectionner le médecin -->
+        <label for="doctor">Sélectionner un médecin :</label>
+        <select id="doctor" name="search">
+            <?php
+            // Obtenez la liste de tous les médecins
+            $allDoctors = $doctorModel->getAllDoctors();
 
-        <label for="doctorSelect">Ou sélectionnez un médecin :</label>
-        <select id="doctorSelect" name="doctorSelect">
-            <option value="">Choisissez un médecin</option>
-            <?php foreach ($allDoctors as $doctor): ?>
-                <option value="<?php echo $doctor['id']; ?>">
-                    <?php echo $doctor['name'].' '.$doctor['surname']; ?>
-                </option>
-            <?php endforeach; ?>
+            // Obtenez le médecin sélectionné, s'il y en a un
+            $selectedDoctor = isset($_GET['search']) ? $_GET['search'] : '';
+
+            // Affichez chaque médecin comme une option dans la liste déroulante
+            foreach ($allDoctors as $doctor) {
+                $fullName = $doctor['name'] . ' ' . $doctor['surname'];
+                $isSelected = ($fullName === $selectedDoctor) ? 'selected' : '';
+
+                echo '<option value="' . $fullName . '" ' . $isSelected . '>' . $fullName . '</option>';
+            }
+            ?>
         </select>
-        <button type="submit">Afficher Rapports</button>
+
+        <!-- Bouton de recherche -->
+        <button type="submit">Rechercher</button>
     </form>
 
-    <?php if ($searchResultsExist): ?>
-        <h2>Résultats de la recherche :</h2>
-        <?php foreach ($results as $result): ?>
-            <p>
-                Médecin: <?php echo $result['medecinName'] . " " . $result['medecinSurname'] . ", Spécialité: " . $result['specialite'] . ", Visiteur: " . $result['visiteurName'] . " " . $result['visiteurSurname'] . ", Motif: " . $result['motif'] . ", Bilan: " . $result['bilan'] . ", Date: " . $result['date']; ?>
-                <a href="../views/editReport.php?reportId=<?php echo $result['id']; ?>">Modifier</a>
-            </p>
-        <?php endforeach; ?>
-    <?php elseif (!empty($selectedDoctorReports)): ?>
-        <h2>Rapports pour le médecin sélectionné :</h2>
-        <?php foreach ($selectedDoctorReports as $report): ?>
-            <p>
-                Médecin: <?php echo $report['medecinName'] . " " . $report['medecinSurname'] . ", Spécialité: " . $report['specialite'] . ", Visiteur: " . $report['visiteurName'] . " " . $report['visiteurSurname'] . ", Motif: " . $report['motif'] . ", Bilan: " . $report['bilan'] . ", Date: " . $report['date']; ?>
-                <a href="../views/editReport.php?reportId=<?php echo $report['id']; ?>">Modifier</a>
-            </p>
-        <?php endforeach; ?>
-    <?php endif; ?>
+    <!-- Affichez les résultats de la recherche -->
+    <?php
+    echo '<h2>Résultats de la recherche :</h2>';
+if ($searchResultsExist) {
+    foreach ($results as $result) {
+        echo "Médecin: " . $result['medecinName'] . " " . $result['medecinSurname'] . ", Spécialité: " . $result['specialite'] . ", Visiteur: " . $result['visiteurName'] . " " . $result['visiteurSurname'] . ", Motif: " . $result['motif'] . ", Bilan: " . $result['bilan'] . ", Date: " . $result['date'] . "<br>";
 
-    <footer>
-        <p>GSB © 2023</p>
-    </footer>
+        // Vérifiez si la clé 'reports' est définie
+        if (isset($result['reports']) && is_array($result['reports'])) {
+            // Affichez tous les rapports du médecin
+            if (count($result['reports']) > 0) {
+                echo '<h3>Rapports du médecin :</h3>';
+                foreach ($result['reports'] as $report) {
+                    echo "Rapport ID: " . $report['id'] . ", Motif: " . $report['motif'] . ", Bilan: " . $report['bilan'] . ", Date: " . $report['date'] . "<br>";
+                }
+            }
+            }
+        }
+    
+} else {
+    echo "Aucun rapport disponible pour ce médecin.";}
+
+?>
 </body>
 </html>

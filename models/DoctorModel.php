@@ -63,43 +63,33 @@ class DoctorModel {
     }  
     // Méthode requete pour afficher tous les rapports du médecin demandé
     public function getReportDetails($searchTerm = null)
-    {
-        // Construction de la requête SQL de base
-        $query = "SELECT m.id as medecinId, p.name as medecinName, p.surname as medecinSurname, s.libelle as specialite, r.motif, r.bilan, r.date, pv.name as visiteurName, pv.surname as visiteurSurname 
-                FROM rapport r 
-                JOIN medecin m ON r.idmedecin = m.id 
-                JOIN personne p ON m.idpersonne = p.id 
-                JOIN specialite s ON m.specialite = s.id 
-                JOIN visiteur v ON r.idvisiteur = v.id 
-                JOIN personne pv ON v.idpersonne = pv.id";
+{
+    // Vérifie si la barre de recherche n'est pas vide
+    if (!empty($searchTerm)) {
+        // Divisez le prénom et le nom
+        $nameParts = explode(' ', $searchTerm);
+        $prenom = $nameParts[0];
+        $nom = $nameParts[1];
 
-        // Si un terme de recherche est fourni, ajoutez une clause WHERE à la requête
-        if ($searchTerm !== null) {
-            $query .= " WHERE p.name LIKE '%$searchTerm%' OR p.surname LIKE '%$searchTerm%'";
-        }
+        // Utilisez $prenom et $nom dans votre requête SQL pour filtrer les résultats
+        $query = "SELECT ... FROM ... WHERE p.name LIKE '%$prenom%' AND p.surname LIKE '%$nom%'";
 
-        // Préparez et exécutez la requête
         $stmt = $this->db->prepare($query);
         $stmt->execute();
-
-        // Récupérez les résultats
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        // Retournez directement le tableau associatif
-        return $results;
-    }
-
-    public function getReportById($id) {
-        $stmt = $this->db->prepare("SELECT * FROM rapport WHERE id = ?");
-        $stmt->bindParam(1, $id, PDO::PARAM_INT);
-        if ($stmt->execute()) {
-            return $stmt->fetch(PDO::FETCH_ASSOC);
-        } else {
-            return null;
+        // Ajoutez la clé 'reports' à chaque médecin, même s'il n'y a pas de rapports
+        foreach ($results as &$result) {
+            $result['reports'] = $this->getReportById(null, $result['medecinId']);
         }
-    }
 
-    public function getReportDetailsById($searchTerm = null, $doctorId = null)
+        return $results;
+    } else {
+        return null;
+    }
+}
+
+public function getReportDetailsById($searchTerm = null)
 {
     $query = "SELECT r.id, m.id as medecinId, p.name as medecinName, p.surname as medecinSurname, s.libelle as specialite, r.motif, r.bilan, r.date, pv.name as visiteurName, pv.surname as visiteurSurname 
               FROM rapport r 
@@ -111,8 +101,6 @@ class DoctorModel {
 
     if ($searchTerm !== null) {
         $query .= " WHERE p.name LIKE '%$searchTerm%' OR p.surname LIKE '%$searchTerm%'";
-    } elseif ($doctorId !== null) {
-        $query .= " WHERE m.id = $doctorId";
     }
 
     $stmt = $this->db->prepare($query);
@@ -120,21 +108,15 @@ class DoctorModel {
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-
-
-    public function searchDoctorsByTerm($searchTerm)
-    {
-    $query = "SELECT medecin.*
-              FROM medecin
-              JOIN personne ON medecin.idpersonne = personne.id
-              WHERE personne.name LIKE '%$searchTerm%'
-                 OR personne.surname LIKE '%$searchTerm%'";
-    
-    // Exécutez la requête et récupérez les résultats
-    $results = $this->db->query($query)->fetchAll(PDO::FETCH_ASSOC);
-
-    return $results;
-    
-}}
+    public function getReportById($id) {
+        $stmt = $this->db->prepare("SELECT * FROM rapport WHERE id = ?");
+        $stmt->bindParam(1, $id, PDO::PARAM_INT);
+        if ($stmt->execute()) {
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } else {
+            return null;
+        }
+    }
+}
     
 ?>
