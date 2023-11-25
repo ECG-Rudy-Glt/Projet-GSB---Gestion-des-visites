@@ -29,11 +29,11 @@ class VisiteurController {
             echo "</pre>";
 
             // Récupération des données du formulaire
-            $username = $_POST['username'];
-            $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
             $name = $_POST['name'];
             $surname = $_POST['surname'];
             $tel = $_POST['tel'];
+            $email = $_POST['email'];
+            $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
             // Récupération des détails de l'adresse
             $rue = $_POST['rue'];
@@ -43,7 +43,7 @@ class VisiteurController {
             $pays = $_POST['pays'];
 
             // Effectuer l'inscription
-            $registrationResult = $this->model->register($name, $surname, $tel, $rue, $codepostal, $ville, $dpartement, $pays, $password);
+            $registrationResult = $this->model->register($name, $surname, $tel, $email, $rue, $codepostal, $ville, $dpartement, $pays, $password);
             var_dump($registrationResult); // Vérifie le résultat de l'inscription
 
             if ($registrationResult) {

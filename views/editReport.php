@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['reportId'])) {
 <body>
     <h1>Modifier Rapport</h1>
     <?php if ($report): ?>
-        <form action="edit_report.php?reportId=<?php echo $reportId; ?>" method="post">
+        <form action="../views/editReport.php.php?reportId=<?php echo $reportId; ?>" method="post">
             <input type="hidden" name="reportId" value="<?php echo $reportId; ?>">
 
             <label for="motif">Motif:</label>
