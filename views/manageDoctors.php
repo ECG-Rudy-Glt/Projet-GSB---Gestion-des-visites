@@ -1,7 +1,45 @@
 <?php
 include_once '../models/DoctorModel.php';
 
+
 $doctorModel = new DoctorModel($dbConnection);
+
+function displaySearchResults($results, $searchResultsExist) {
+    echo '<h2>Résultats de la recherche :</h2>';
+    if ($searchResultsExist) {
+        echo '<table>';
+        echo '<tr><th>Médecin</th><th>Spécialité</th><th>Visiteur</th><th>Motif</th><th>Bilan</th><th>Date</th></tr>';
+        foreach ($results as $result) {
+            echo "<tr>";
+            echo "<td>{$result['medecinName']} {$result['medecinSurname']}</td>";
+            echo "<td>{$result['specialite']}</td>";
+            echo "<td>{$result['visiteurName']} {$result['visiteurSurname']}</td>";
+            echo "<td>{$result['motif']}</td>";
+            echo "<td>{$result['bilan']}</td>";
+            echo "<td>{$result['date']}</td>";
+            echo "</tr>";
+
+            // Vérifiez si la clé 'reports' est définie
+            if (isset($result['reports']) && is_array($result['reports'])) {
+                // Affichez tous les rapports du médecin
+                if (count($result['reports']) > 0) {
+                    echo '<tr><td colspan="6"><h3>Rapports du médecin :</h3></td></tr>';
+                    foreach ($result['reports'] as $report) {
+                        echo "<tr>";
+                        echo "<td>Rapport ID: {$report['id']}</td>";
+                        echo "<td>Motif: {$report['motif']}</td>";
+                        echo "<td>Bilan: {$report['bilan']}</td>";
+                        echo "<td>Date: {$report['date']}</td>";
+                        echo "</tr>";
+                    }
+                }
+            }
+        }
+        echo '</table>';
+    } else {
+        echo "Aucun rapport disponible pour ce médecin.";
+    }
+}
 
 // Initialise une variable pour savoir si des résultats de recherche existent
 $searchResultsExist = false;
@@ -22,10 +60,7 @@ if (isset($_GET['search'])) {
         $results = $doctorModel->getReportDetailsById($prenom, $nom);
 
         // Vérifie s'il y a des résultats
-        if (!empty($results)) {
-            // Indique que des résultats de recherche existent
-            $searchResultsExist = true;
-        }
+        $searchResultsExist = !empty($results);
     }
 }
 ?>
@@ -36,6 +71,7 @@ if (isset($_GET['search'])) {
     <meta charset="UTF-8">
     <title>GSB - Gestion des Médecins</title>
     <link rel="stylesheet" href="./Doctors.css">
+    <link rel="stylesheet" type="text/css" href="./rapport.css">
     <!-- Liens vers vos fichiers CSS et autres ressources si nécessaire -->
 </head>
 <body>
@@ -67,28 +103,11 @@ if (isset($_GET['search'])) {
         <button type="submit">Rechercher</button>
     </form>
 
-    <!-- Affichez les résultats de la recherche -->
+    <!-- Appel de la fonction d'affichage des résultats de recherche -->
     <?php
-    echo '<h2>Résultats de la recherche :</h2>';
-if ($searchResultsExist) {
-    foreach ($results as $result) {
-        echo "Médecin: " . $result['medecinName'] . " " . $result['medecinSurname'] . ", Spécialité: " . $result['specialite'] . ", Visiteur: " . $result['visiteurName'] . " " . $result['visiteurSurname'] . ", Motif: " . $result['motif'] . ", Bilan: " . $result['bilan'] . ", Date: " . $result['date'] . "<br>";
-
-        // Vérifiez si la clé 'reports' est définie
-        if (isset($result['reports']) && is_array($result['reports'])) {
-            // Affichez tous les rapports du médecin
-            if (count($result['reports']) > 0) {
-                echo '<h3>Rapports du médecin :</h3>';
-                foreach ($result['reports'] as $report) {
-                    echo "Rapport ID: " . $report['id'] . ", Motif: " . $report['motif'] . ", Bilan: " . $report['bilan'] . ", Date: " . $report['date'] . "<br>";
-                }
-            }
-            }
-        }
-    
-} else {
-    echo "Aucun rapport disponible pour ce médecin.";}
-
-?>
+    if (isset($_GET['search'])) {
+        displaySearchResults($results, $searchResultsExist);
+    }
+    ?>
 </body>
 </html>
