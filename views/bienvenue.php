@@ -36,10 +36,10 @@
 		 <input type="submit" value="Créer un Rapport">
 	 </form>
 	 
-	 <!-- Bouton pour modifier un rapport -->
-	 <!-- Remplacer 'modifyReport.php' par le chemin de votre script de modification de rapport -->
-	 <form action="modifyReport.php" method="post">
-		 <input type="submit" value="Modifier un Rapport">
-	 </form>
+	<!-- Bouton pour modifier un rapport -->
+	<form action="selectReportDate.php" method="post">
+		<input type="submit" value="Modifier un Rapport">
+	</form>
+
  </body>
  </html>

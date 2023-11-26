@@ -10,12 +10,16 @@ $rapportModel = new RapportModel($dbConnection);
 
 // Récupérer les données du formulaire
 $idVisiteur = $_POST['idVisiteur'];
-$medecinId = $_POST['doctor'];
+$idMedecin = $_POST['idMedecin'];
 $date = $_POST['date'];
 $motif = $_POST['motif'];
 $bilan = $_POST['bilan'];
 $selectedMedicaments = $_POST['selectedMedicaments'] ?? [];
 $quantities = $_POST['quantities'] ?? [];
+echo '<pre>';
+var_dump($_POST);
+echo '</pre>';
+
 
 if (empty($idVisiteur)) {
     // Gérer le cas où l'ID du visiteur n'est pas défini ou est vide
@@ -26,7 +30,7 @@ if (empty($idVisiteur)) {
 // Valider les données (à compléter selon vos besoins)
 
 // Enregistrer le rapport
-$rapportId = $rapportModel->create($idVisiteur, $medecinId, $date, $motif, $bilan);
+$rapportId = $rapportModel->create($idVisiteur, $idMedecin, $date, $motif, $bilan);
 if ($rapportId) {
     // Enregistrer les médicaments offerts si nécessaire
     foreach ($selectedMedicaments as $medicamentId) {

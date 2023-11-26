@@ -23,31 +23,31 @@ class VisiteurController {
 
     public function register() {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            // Afficher les données du formulaire
+            // Afficher les données du formulaire pour le débogage
             echo "<pre>";
             var_dump($_POST);
             echo "</pre>";
-
+    
             // Récupération des données du formulaire
             $name = $_POST['name'];
             $surname = $_POST['surname'];
             $tel = $_POST['tel'];
             $email = $_POST['email'];
-            $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-
+            $password = $_POST['password']; // Assigner directement sans hachage
+    
             // Récupération des détails de l'adresse
             $rue = $_POST['rue'];
             $codepostal = $_POST['codepostal'];
             $ville = $_POST['ville'];
             $dpartement = $_POST['dpartement'];
             $pays = $_POST['pays'];
-
+    
             // Effectuer l'inscription
             $registrationResult = $this->model->register($name, $surname, $tel, $email, $rue, $codepostal, $ville, $dpartement, $pays, $password);
             var_dump($registrationResult); // Vérifie le résultat de l'inscription
-
+    
             if ($registrationResult) {
-                var_dump("Redirection en cours"); // Vérifie si le code atteint ce point
+                // Rediriger vers la page de connexion
                 header("Location: ../views/login.html");
                 exit;
             } else {
@@ -55,6 +55,7 @@ class VisiteurController {
             }
         }
     }
+    
 }
 
 $controller = new VisiteurController();

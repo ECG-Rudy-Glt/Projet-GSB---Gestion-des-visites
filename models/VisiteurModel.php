@@ -28,35 +28,29 @@ class VisiteurModel {
     }
 
     public function register($name, $surname, $tel, $email, $rue, $codepostal, $ville, $dpartement, $pays, $password) {
-
         try {
             $this->db->beginTransaction();
-
+    
             // Créer l'adresse
             $idadresse = $this->createAddress($rue, $codepostal, $ville, $dpartement, $pays);
             if ($idadresse === false) {
                 throw new Exception("Erreur lors de la création de l'adresse.");
             }
-
-            // Créer la personne avec email
+    
             // Créer la personne avec email
             $stmtPersonne = $this->db->prepare("INSERT INTO personne (name, surname, tel, email, idadresse) VALUES (?, ?, ?, ?, ?)");
             if (!$stmtPersonne->execute([$name, $surname, $tel, $email, $idadresse])) {
                 throw new Exception("Erreur lors de la création de la personne.");
             }
-
+    
             $idpersonne = $this->db->lastInsertId();
-
-            // Hachage du mot de passe avec un sel unique
-            $sel = bin2hex(random_bytes(16));
-            $passwordHash = password_hash($password . $sel, PASSWORD_DEFAULT);
-
-            // Créer le visiteur
-            $stmtVisiteur = $this->db->prepare("INSERT INTO visiteur (idpersonne, password, sel) VALUES (?, ?, ?)");
-            if (!$stmtVisiteur->execute([$idpersonne, $passwordHash, $sel])) {
+    
+            // Insérer le mot de passe directement sans hachage
+            $stmtVisiteur = $this->db->prepare("INSERT INTO visiteur (idpersonne, password) VALUES (?, ?)");
+            if (!$stmtVisiteur->execute([$idpersonne, $password])) {
                 throw new Exception("Erreur lors de la création du visiteur.");
             }
-
+    
             $this->db->commit();
             return true;
         } catch (Exception $e) {
@@ -65,5 +59,6 @@ class VisiteurModel {
             return false;
         }
     }
+    
 }
 ?>

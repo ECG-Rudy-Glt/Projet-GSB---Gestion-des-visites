@@ -31,11 +31,11 @@ $medicaments = $medicamentModel->getAllMedicaments();
 
         <!-- Sélection du médecin -->
         <label for="doctor">Médecin :</label>
-        <select name="doctor" id="doctor">
-            <?php foreach ($doctors as $doctor): ?>
-                <option value="<?php echo $doctor['id']; ?>"><?php echo $doctor['name'] . " " . $doctor['surname']; ?></option>
-            <?php endforeach; ?>
-        </select>
+            <select name="idMedecin" id="doctor"> <!-- Changez 'doctor' en 'idmedecin' ici -->
+                <?php foreach ($doctors as $doctor): ?>
+                    <option value="<?php echo $doctor['id']; ?>"><?php echo $doctor['name'] . " " . $doctor['surname']; ?></option>
+                <?php endforeach; ?>
+            </select>
         <br>
 
         <!-- Sélection de la date -->
