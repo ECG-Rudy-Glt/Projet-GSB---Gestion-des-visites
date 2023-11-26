@@ -131,5 +131,26 @@ public function getReportDetailsById($searchTerm = null)
         } else {
             return null;
         }
-    }}
+    }
+    public function getProfession($prenom, $nom){
+        $query = "SELECT s.libelle 
+                  FROM medecin m
+                  JOIN personne p ON m.idpersonne = p.id
+                  JOIN specialite s ON m.specialite = s.id
+                  WHERE p.name = :prenom AND p.surname = :nom";
+    
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':prenom', $prenom, PDO::PARAM_STR);
+        $stmt->bindParam(':nom', $nom, PDO::PARAM_STR);
+    
+        if ($stmt->execute()) {
+            return $stmt->fetch(PDO::FETCH_ASSOC)['libelle'];
+        } else {
+            return null;
+        }
+    }
+
+}
+
+
 ?>

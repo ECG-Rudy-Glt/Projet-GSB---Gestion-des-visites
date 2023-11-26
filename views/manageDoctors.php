@@ -55,9 +55,11 @@ function displaySearchResults($results, $searchResultsExist, $doctorModel) {
         $nom = $nameParts[1];
 
         $doctorEmail = $doctorModel->getDoctorEmailByName($prenom, $nom);
-
+        $doctorProfession = $doctorModel->getProfession($prenom, $nom);
         // Affiche le mail et le message d'erreur dans le tableau
         echo "<tr><td colspan='6'>Email du médecin : <a href='mailto:$doctorEmail'>$doctorEmail</a></td></tr>";
+        echo '<tr><th>Médecin</th><th>Spécialité</th></tr>';
+        echo "<tr><td>$prenom $nom</td><td>$doctorProfession</td></tr>";
         echo "<tr><td colspan='6'>Aucun rapport disponible pour ce médecin.</td></tr>";
     }
     echo '</table>';
