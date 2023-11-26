@@ -17,7 +17,6 @@ class RapportModel {
         $stmt->bindValue(3, $date, PDO::PARAM_STR);
         $stmt->bindValue(4, $motif, PDO::PARAM_STR);
         $stmt->bindValue(5, $bilan, PDO::PARAM_STR);
-        
 
         if ($stmt->execute()) {
             return $this->db->lastInsertId(); // Retourne l'ID du rapport créé
@@ -29,3 +28,4 @@ class RapportModel {
     // Ajoutez d'autres méthodes si nécessaire
 }
 ?>
+

@@ -5,9 +5,6 @@ error_reporting(E_ALL);
 require_once '../config.php'; // Assurez-vous d'inclure votre fichier de configuration de base de données
 require_once '../models/RapportModel.php';
 // Incluez d'autres modèles si nécessaire
-require_once '../views/createReport.php';
-require_once '../views/style.css';
-
 
 $rapportModel = new RapportModel($dbConnection);
 
@@ -39,7 +36,7 @@ if ($rapportId) {
     }
 
     // Redirection ou affichage d'un message de succès
-    header('Location: index.php');
+    header('Location: ../views/reussite.php');
 } else {
     // Gérer l'échec de l'enregistrement
     echo "Erreur lors de l'enregistrement du rapport.";

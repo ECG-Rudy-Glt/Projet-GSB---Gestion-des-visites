@@ -1,5 +1,12 @@
 <?php
+session_start();
 
+// Vérifiez si l'utilisateur est connecté
+if (!isset($_SESSION['userId'])) {
+    // Redirigez vers la page de connexion si l'utilisateur n'est pas connecté
+    header("Location: ../models/login.php");
+    exit;
+}
 
 require_once '../models/DoctorModel.php';
 require_once '../models/MedicamentModel.php';
@@ -7,21 +14,21 @@ require_once '../models/RapportModel.php';
 
 $doctorModel = new DoctorModel($dbConnection);
 $doctors = $doctorModel->getAllDoctors();
-$rapportModel = new RapportModel($dbConnection);
-
 $medicamentModel = new MedicamentModel($dbConnection);
 $medicaments = $medicamentModel->getAllMedicaments();
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
     <title>Créer un Rapport de Visite</title>
-    <!-- Inclure le CSS ici si nécessaire -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <h2>Créer un Nouveau Rapport de Visite</h2>
     <form action="../controllers/saveReport.php" method="post">
+        <input type="hidden" name="idVisiteur" value="<?php echo $_SESSION['userId']; ?>">
+
         <!-- Sélection du médecin -->
         <label for="doctor">Médecin :</label>
         <select name="doctor" id="doctor">
