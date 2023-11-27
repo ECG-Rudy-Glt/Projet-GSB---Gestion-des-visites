@@ -26,7 +26,7 @@
  <head>
 	 <title>Bienvenue</title>
 	 <!-- Inclure le CSS ici si nécessaire -->
-	 <link rel="stylesheet" href="style.css">
+	 <link rel="stylesheet" href="bienvenue.css">
  </head>
  <body>
 	 <h1>Bienvenue <?php echo $nom . " " . $prenom; ?></h1>

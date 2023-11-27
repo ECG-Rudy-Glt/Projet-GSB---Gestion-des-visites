@@ -1,6 +1,7 @@
 <?php
 // Inclure DoctorModel et d'autres fichiers nécessaires
 include_once '../models/DoctorModel.php';
+
 $doctorModel = new DoctorModel($dbConnection);
 
 $report = null;
@@ -35,7 +36,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['reportId'])) {
 <html>
 <head>
     <title>Modifier Rapport</title>
-</head>
 <body>
     <h1>Modifier Rapport</h1>
     <?php if ($report): ?>
