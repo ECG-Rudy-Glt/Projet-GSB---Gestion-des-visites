@@ -21,7 +21,7 @@ $userId = $_SESSION['userId']; // Récupérer l'ID de l'utilisateur connecté
 <html>
 <head>
     <title>Sélectionnez une Date</title>
-    <link rel="stylesheet" type="text/css" href="./selectReportDate.css"></head>
+    <link rel="stylesheet" type="text/css" href="./style.css"></head>
 </head>
 <body>
     <h1>Sélectionnez une Date de Rapport</h1>

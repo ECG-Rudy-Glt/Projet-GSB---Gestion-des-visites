@@ -23,7 +23,7 @@ $reports = $rapportModel->getReportsByDate($userId, $date);
 <html>
 <head>
     <title>Rapports du <?php echo htmlspecialchars($date); ?></title>
-    <link rel="stylesheet" href="listReports.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <h1>Rapports du <?php echo htmlspecialchars($date); ?></h1>
