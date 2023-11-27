@@ -1,0 +1,241 @@
+/*
+ * Filename: /Applications/MAMP/htdocs/GSB2/Projet-GSB---Gestion-des-visites/views/style.css
+ * Path: /Applications/MAMP/htdocs/GSB2/Projet-GSB---Gestion-des-visites/views
+ * Created Date: Monday, November 27th 2023, 11:41:21 am
+ * Author: Rudy GAULT
+ * 
+ * Copyright (c) 2023 H2V Solutions
+ */
+
+
+/**
+* bienvenue.css
+*/
+
+ body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    color: #333;
+    margin: 20px;
+}
+
+h2 {
+    color: #007bff;
+}
+
+form {
+    max-width: 600px;
+    margin: 0 auto;
+    align-items: flex-start; /* Aligner les éléments selon le côté supérieur */
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+/* Ajoutez une classe pour le conteneur de la case à cocher */
+
+.medicament-item {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center; /* Aligner les éléments verticalement au centre */
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center; /* Cela alignera verticalement la case à cocher, l'étiquette et l'entrée */
+    justify-content: flex-start; /* Cela alignera les éléments au début du conteneur */
+    gap: 10px; /* Cela crée de l'espace entre les éléments */
+}
+
+.quantity-label {
+    white-space: nowrap; /* Cela empêche l'étiquette de se diviser sur plusieurs lignes */
+}
+
+input[type="submit"] {
+    margin-right: 10px; /* Ajoute un espace à droite du bouton de soumission */
+}
+
+
+
+
+
+/* Doctors.css */
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    color: #333;
+}
+
+form {
+    margin-top: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"] {
+    padding: 5px;
+}
+
+button {
+    padding: 8px 15px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+h2 {
+    margin-top: 20px;
+    color: #333;
+}
+
+p {
+    margin-bottom: 10px;
+}
+
+
+
+/* listeReports.css */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+h1 {
+    color: #333;
+}
+
+div {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 20px auto;
+    max-width: 600px;
+}
+
+p {
+    margin: 0;
+}
+
+form {
+    margin-top: 10px;
+}
+
+input[type="submit"] {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+
+
+/* rapport.css */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+
+/* selectReport.css */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    color: #333;
+}
+
+form {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+input[type="text"],
+textarea,
+input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+textarea {
+    resize: vertical;
+}
+
+input[type="submit"] {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+p {
+    color: #d9534f;
+}
