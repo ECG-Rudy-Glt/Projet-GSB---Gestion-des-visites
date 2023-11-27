@@ -26,6 +26,8 @@
  <head>
 	 <title>Bienvenue</title>
 	 <link rel="stylesheet" href="style css/Bienvenue.css">
+	 <a href="../index.php" class="btn-home">Retour à l'accueil</a>
+
  </head>
  <body>
 	 <h1>Bienvenue <?php echo $prenom . " " . $nom; ?></h1>
@@ -38,6 +40,5 @@
 	<form action="selectReportDate.php" method="post">
 		<input type="submit" value="Modifier un Rapport">
 	</form>
-
  </body>
  </html>

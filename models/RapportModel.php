@@ -45,6 +45,16 @@ class RapportModel {
             return null; // Ou gérer l'erreur comme nécessaire
         }
     }
+    public function getReportById($id) {
+        $stmt = $this->db->prepare("SELECT * FROM rapport WHERE id = ?");
+        $stmt->bindParam(1, $id, PDO::PARAM_INT);
+        if ($stmt->execute()) {
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } else {
+            return null;
+        }
+    }
+    
     
 }
 ?>

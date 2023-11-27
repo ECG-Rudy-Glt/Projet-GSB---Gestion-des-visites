@@ -35,7 +35,7 @@ $reports = $rapportModel->getReportsByDate($userId, $date);
         <?php foreach ($reports as $report): ?>
             <div class="report">
                 <p>Médecin: <?php echo htmlspecialchars($report['name']) . " " . htmlspecialchars($report['surname']); ?></p>
-                <form action="editReport.php" method="post">
+                <form action="./editReport.php" method="post">
                     <input type="hidden" name="reportId" value="<?php echo htmlspecialchars($report['id']); ?>">
                     <input type="submit" value="Modifier ce Rapport">
                 </form>

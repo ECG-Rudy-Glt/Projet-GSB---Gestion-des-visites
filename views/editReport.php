@@ -1,60 +1,58 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 // Inclure DoctorModel et d'autres fichiers nécessaires
 include_once '../models/DoctorModel.php';
+require_once '../config.php';
 
-$doctorModel = new DoctorModel($dbConnection);
-
-$report = null;
-$reportId = null;
-
-// Récupérer le rapport à modifier
-if (isset($_GET['reportId'])) {
-    $reportId = $_GET['reportId'];
-    $report = $doctorModel->getReportById($reportId);
+// Vérifiez que l'ID du rapport a été envoyé.
+if (!isset($_POST['reportId'])) {
+    // Si l'ID n'est pas fourni, redirigez l'utilisateur vers la liste des rapports.
+    header('Location: listReports.php');
+    exit;
 }
 
-// Traitement de la soumission du formulaire
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['reportId'])) {
-    // Récupérer les données de formulaire
-    $reportId = $_POST['reportId'];
-    $motif = $_POST['motif'];
-    $bilan = $_POST['bilan'];
-    $date = $_POST['date'];
+// Créez une instance de votre modèle.
+$doctorModel = new DoctorModel();
+$reportId = $_POST['reportId'];
 
-    // Appeler la méthode pour mettre à jour le rapport
-    $updateResult = $doctorModel->updateReport($reportId, $motif, $bilan, $date);
+// Utilisez la méthode getReportById pour récupérer les données du rapport.
+$report = $doctorModel->getReportById($reportId);
 
-    if ($updateResult) {
-        echo "Rapport mis à jour avec succès.";
-    } else {
-        echo "Erreur lors de la mise à jour du rapport.";
-    }
+// Vérifiez que le rapport a bien été récupéré.
+if (!$report) {
+    echo "Le rapport demandé n'a pas pu être trouvé.";
+    exit;
 }
+
+// Si tout est bon, affichez le formulaire avec les données du rapport.
 ?>
-
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
+    <meta charset="UTF-8">
     <title>Modifier Rapport</title>
+    <!-- Incluez votre CSS ici. -->
+</head>
 <body>
-    <h1>Modifier Rapport</h1>
-    <?php if ($report): ?>
-        <form action="../views/editReport.php.php?reportId=<?php echo $reportId; ?>" method="post">
-            <input type="hidden" name="reportId" value="<?php echo $reportId; ?>">
+    <h1>Modifier le Rapport</h1>
+    <form action="updateReport.php" method="post">
+        <input type="hidden" name="id" value="<?php echo htmlspecialchars($report['id']); ?>">
 
-            <label for="motif">Motif:</label>
-            <input type="text" id="motif" name="motif" value="<?php echo htmlspecialchars($report['motif']); ?>">
+        <label for="motif">Motif:</label>
+        <input type="text" id="motif" name="motif" value="<?php echo htmlspecialchars($report['motif']); ?>" required>
 
-            <label for="bilan">Bilan:</label>
-            <textarea id="bilan" name="bilan"><?php echo htmlspecialchars($report['bilan']); ?></textarea>
+        <label for="bilan">Bilan:</label>
+        <textarea id="bilan" name="bilan" required><?php echo htmlspecialchars($report['bilan']); ?></textarea>
 
-            <label for="date">Date:</label>
-            <input type="date" id="date" name="date" value="<?php echo htmlspecialchars($report['date']); ?>">
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" value="<?php echo htmlspecialchars($report['date']); ?>" required>
 
-            <input type="submit" value="Mettre à jour">
-        </form>
-    <?php else: ?>
-        <p>Rapport introuvable.</p>
-    <?php endif; ?>
+        <!-- Ajoutez tous les champs supplémentaires que vous pourriez avoir. -->
+
+        <input type="submit" value="Enregistrer les modifications">
+    </form>
 </body>
 </html>
