@@ -21,14 +21,16 @@ $userId = $_SESSION['userId']; // Récupérer l'ID de l'utilisateur connecté
 <html>
 <head>
     <title>Sélectionnez une Date</title>
-    <link rel="stylesheet" type="text/css" href="./selectReportDate.css"></head>
+    <link rel="stylesheet" type="text/css" href="style css/selectReportDate.css">
 </head>
 <body>
-    <h1>Sélectionnez une Date de Rapport</h1>
-    <form action="listReports.php" method="post">
-        <input type="date" name="date" required>
-        <input type="hidden" name="userId" value="<?php echo $userId; ?>">
-        <input type="submit" value="Afficher les Rapports">
-    </form>
+    <div class="container">
+        <h1>Sélectionnez une Date de Rapport</h1>
+        <form action="listReports.php" method="post">
+            <input type="date" name="date" required>
+            <input type="hidden" name="userId" value="<?php echo $userId; ?>">
+            <input type="submit" value="Afficher les Rapports">
+        </form>
+    </div>
 </body>
 </html>

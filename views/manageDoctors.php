@@ -95,8 +95,8 @@ if (isset($_GET['search'])) {
 <head>
     <meta charset="UTF-8">
     <title>GSB - Gestion des Médecins</title>
-    <link rel="stylesheet" href="./Doctors.css">
-    <link rel="stylesheet" type="text/css" href="./rapport.css">
+    <link rel="stylesheet" href="style css/manageDoctors.css">
+    <link rel="stylesheet" href="style css/manageDoctorsTableau.css">
     <!-- Liens vers vos fichiers CSS et autres ressources si nécessaire -->
 </head>
 <body>
