@@ -28,7 +28,7 @@
 	 <link rel="stylesheet" href="style css/Bienvenue.css">
  </head>
  <body>
-	 <h1>Bienvenue <?php echo $nom . " " . $prenom; ?></h1>
+	 <h1>Bienvenue <?php echo $prenom . " " . $nom; ?></h1>
 	 <!-- Bouton pour créer un rapport -->
 	 <form action="createReport.php" method="post">
 		 <input type="submit" value="Créer un Rapport">
