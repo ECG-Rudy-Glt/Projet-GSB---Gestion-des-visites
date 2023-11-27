@@ -57,10 +57,11 @@ class DoctorModel {
     }
     // Méthode pour afficher les médecins
     public function getAllDoctors() {
-        $stmt = $this->db->prepare("SELECT medecin.id, personne.name, personne.surname FROM medecin JOIN personne ON medecin.idpersonne = personne.id");
+        $stmt = $this->db->prepare("SELECT medecin.id, personne.name, personne.surname, personne.email FROM medecin JOIN personne ON medecin.idpersonne = personne.id");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    
     
     // Méthode requete pour afficher tous les rapports du médecin demandé
     public function getReportDetails($searchTerm = null)

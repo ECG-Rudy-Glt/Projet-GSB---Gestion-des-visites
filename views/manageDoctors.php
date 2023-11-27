@@ -115,12 +115,17 @@ if (isset($_GET['search'])) {
             $selectedDoctor = isset($_GET['search']) ? $_GET['search'] : '';
 
             // Affichez chaque médecin comme une option dans la liste déroulante
+            // Affichez chaque médecin comme une option dans la liste déroulante
             foreach ($allDoctors as $doctor) {
                 $fullName = $doctor['name'] . ' ' . $doctor['surname'];
+                $email = $doctor['email']; // Récupérer l'email du médecin
+                $optionValue = $fullName . ' (' . $email . ')'; // Combinez le nom et l'email
+
                 $isSelected = ($fullName === $selectedDoctor) ? 'selected' : '';
 
-                echo '<option value="' . $fullName . '" ' . $isSelected . '>' . $fullName . '</option>';
+                echo '<option value="' . $optionValue . '" ' . $isSelected . '>' . $optionValue . '</option>';
             }
+
             ?>
         </select>
 
