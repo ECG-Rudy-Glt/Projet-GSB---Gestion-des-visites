@@ -54,6 +54,18 @@ class RapportModel {
             return null;
         }
     }
+
+    public function updateReport($id, $motif, $bilan) {
+        $stmt = $this->db->prepare("UPDATE rapport SET motif = ?, bilan = ? WHERE id = ?");
+        $stmt->bindParam(1, $motif);
+        $stmt->bindParam(2, $bilan);
+        $stmt->bindParam(3, $id, PDO::PARAM_INT);
+        if (!$stmt->execute()) {
+            die("Erreur SQL : " . $stmt->error);
+        }
+        return true;
+    }
+
     
     
 }

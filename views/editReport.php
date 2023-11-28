@@ -3,9 +3,11 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// Inclure DoctorModel et d'autres fichiers nécessaires
 include_once '../models/DoctorModel.php';
 require_once '../config.php';
+
+// Créez une instance de DoctorModel avec la connexion à la base de données.
+$doctorModel = new DoctorModel($dbConnection);
 
 // Vérifiez que l'ID du rapport a été envoyé.
 if (!isset($_POST['reportId'])) {
@@ -14,8 +16,6 @@ if (!isset($_POST['reportId'])) {
     exit;
 }
 
-// Créez une instance de votre modèle.
-$doctorModel = new DoctorModel();
 $reportId = $_POST['reportId'];
 
 // Utilisez la méthode getReportById pour récupérer les données du rapport.
@@ -27,7 +27,6 @@ if (!$report) {
     exit;
 }
 
-// Si tout est bon, affichez le formulaire avec les données du rapport.
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -38,7 +37,7 @@ if (!$report) {
 </head>
 <body>
     <h1>Modifier le Rapport</h1>
-    <form action="updateReport.php" method="post">
+    <form action="../controllers/updateReport.php" method="post">
         <input type="hidden" name="id" value="<?php echo htmlspecialchars($report['id']); ?>">
 
         <label for="motif">Motif:</label>
