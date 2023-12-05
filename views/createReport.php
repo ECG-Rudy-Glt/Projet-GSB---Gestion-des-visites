@@ -23,9 +23,13 @@ $medicaments = $medicamentModel->getAllMedicaments();
 <head>
     <title>Créer un Rapport de Visite</title>
     <link rel="stylesheet" href="style css/createReport.css">
+    <link rel="stylesheet" href="style.css">
+    <a href="../index.php" class="btn-home">Retour à l'accueil</a>
+    <a href="./bienvenue.php" class="btn-home">Revenir en arrière</a>
 </head>
 <body>
     <h2>Créer un Nouveau Rapport de Visite</h2>
+
     <form action="../controllers/saveReport.php" method="post">
         <input type="hidden" name="idVisiteur" value="<?php echo $_SESSION['userId']; ?>">
 

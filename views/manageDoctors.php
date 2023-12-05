@@ -98,40 +98,44 @@ if (isset($_GET['search'])) {
     <link rel="stylesheet" href="style css/manageDoctors.css">
     <link rel="stylesheet" href="style css/manageDoctorsTableau.css">
     <!-- Liens vers vos fichiers CSS et autres ressources si nécessaire -->
+    <!-- Bouton de retour à l'accueil -->
+    <a href="../index.php" class="btn-home">Retour à l'accueil</a>
+
 </head>
 <body>
     <h1>Gestion des Médecins</h1>
 
     <!-- Formulaire de recherche -->
     <form action="" method="get">
-        <!-- Utilisez la liste déroulante pour sélectionner le médecin -->
-        <label for="doctor">Sélectionner un médecin :</label>
-        <select id="doctor" name="search">
-            <?php
-            // Obtenez la liste de tous les médecins
-            $allDoctors = $doctorModel->getAllDoctors();
+    <!-- Utilisez la liste déroulante pour sélectionner le médecin -->
+    <label for="doctor">Sélectionner un médecin :</label>
+    <select id="doctor" name="search">
+        <?php
+        // Obtenez la liste de tous les médecins
+        $allDoctors = $doctorModel->getAllDoctors();
+        
+        // Obtenez le médecin sélectionné, s'il y en a un
+        $selectedDoctor = isset($_GET['search']) ? $_GET['search'] : '';
 
-            // Obtenez le médecin sélectionné, s'il y en a un
-            $selectedDoctor = isset($_GET['search']) ? $_GET['search'] : '';
+        // Affichez chaque médecin comme une option dans la liste déroulante
+        foreach ($allDoctors as $doctor) {
+            $fullName = $doctor['name'] . ' ' . $doctor['surname'];
+            $email = $doctor['email']; // Récupérer l'email du médecin
+            // Assurez-vous que la valeur de l'option correspond à ce que vous attendez après la soumission
+            $optionValue = $fullName; // Si vous voulez inclure l'email, ajoutez-le ici
+            
+            // Assurez-vous que la comparaison est faite correctement. Si vous avez inclus l'email dans $selectedDoctor, incluez-le également ici.
+            $isSelected = ($optionValue === $selectedDoctor) ? 'selected' : '';
 
-            // Affichez chaque médecin comme une option dans la liste déroulante
-            // Affichez chaque médecin comme une option dans la liste déroulante
-            foreach ($allDoctors as $doctor) {
-                $fullName = $doctor['name'] . ' ' . $doctor['surname'];
-                $email = $doctor['email']; // Récupérer l'email du médecin
-                $optionValue = $fullName . ' (' . $email . ')'; // Combinez le nom et l'email
+            echo "<option value=\"$optionValue\" $isSelected>$fullName ($email)</option>";
+        }
+        ?>
+    </select>
 
-                $isSelected = ($fullName === $selectedDoctor) ? 'selected' : '';
+    <!-- Bouton de recherche -->
+    <button type="submit">Rechercher</button>
+</form>
 
-                echo '<option value="' . $optionValue . '" ' . $isSelected . '>' . $optionValue . '</option>';
-            }
-
-            ?>
-        </select>
-
-        <!-- Bouton de recherche -->
-        <button type="submit">Rechercher</button>
-    </form>
 
     <!-- Appel de la fonction d'affichage des résultats de recherche -->
     <?php

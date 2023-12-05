@@ -119,6 +119,17 @@ public function getReportDetailsById($searchTerm = null)
             return null;
         }
     }
+
+    public function updateReport($id, $motif, $bilan, $date) {
+        $stmt = $this->db->prepare("UPDATE rapport SET motif = ?, bilan = ?, date = ? WHERE id = ?");
+        $stmt->bindParam(1, $motif);
+        $stmt->bindParam(2, $bilan);
+        $stmt->bindParam(3, $date);
+        $stmt->bindParam(4, $id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+    
     public function getDoctorEmailByName($prenom, $nom) {
         $query = "SELECT email FROM medecin
                   JOIN personne ON medecin.idpersonne = personne.id

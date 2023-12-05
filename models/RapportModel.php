@@ -95,7 +95,26 @@ public function createOrdonnance($idRapport, $idMedicament, $quantity) {
 
     return $stmt->execute(); // Retourne vrai si l'insertion réussit, sinon faux
 }
+    public function getReportById($id) {
+        $stmt = $this->db->prepare("SELECT * FROM rapport WHERE id = ?");
+        $stmt->bindParam(1, $id, PDO::PARAM_INT);
+        if ($stmt->execute()) {
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } else {
+            return null;
+        }
+    }
 
+    public function updateReport($id, $motif, $bilan) {
+        $stmt = $this->db->prepare("UPDATE rapport SET motif = ?, bilan = ? WHERE id = ?");
+        $stmt->bindParam(1, $motif);
+        $stmt->bindParam(2, $bilan);
+        $stmt->bindParam(3, $id, PDO::PARAM_INT);
+        if (!$stmt->execute()) {
+            die("Erreur SQL : " . $stmt->error);
+        }
+        return true;
+    }
     
 }
 
