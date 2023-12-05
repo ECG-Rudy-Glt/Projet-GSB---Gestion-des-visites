@@ -22,7 +22,7 @@ $medicaments = $medicamentModel->getAllMedicaments();
 <html>
 <head>
     <title>Créer un Rapport de Visite</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style css/createReport.css">
 </head>
 <body>
     <h2>Créer un Nouveau Rapport de Visite</h2>
@@ -52,6 +52,7 @@ $medicaments = $medicamentModel->getAllMedicaments();
         <textarea name="bilan" id="bilan" required></textarea>
         <br>
 
+
         <!-- Sélection des médicaments -->
         <h3>Médicaments</h3>
         <?php foreach ($medicaments as $medicament): ?>
@@ -63,8 +64,8 @@ $medicaments = $medicamentModel->getAllMedicaments();
                     <input type="number" name="quantities[<?php echo $medicament['id']; ?>]" min="0">
                 </div>
             </div>
-
         <?php endforeach; ?>
+
 
         <!-- Bouton de soumission -->
         <input type="submit" value="Enregistrer le Rapport">

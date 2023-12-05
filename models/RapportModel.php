@@ -45,7 +45,60 @@ class RapportModel {
             return null; // Ou gérer l'erreur comme nécessaire
         }
     }
+
+    // Méthode pour ajouter un nouveau rapport et créer une ordonnance
+public function createAll($idVisiteur, $idMedecin, $date, $motif, $bilan, $selectedMedicaments, $quantities) {
+    $this->db->beginTransaction(); // Commencez une transaction
+
+    try {
+        // Insérez le rapport
+        $stmt = $this->db->prepare("INSERT INTO rapport (idvisiteur, idmedecin, date, motif, bilan) VALUES (?, ?, ?, ?, ?)");
+
+        // Lier les valeurs
+        $stmt->bindValue(1, $idVisiteur, PDO::PARAM_INT);
+        $stmt->bindValue(2, $idMedecin, PDO::PARAM_INT);
+        $stmt->bindValue(3, $date, PDO::PARAM_STR);
+        $stmt->bindValue(4, $motif, PDO::PARAM_STR);
+        $stmt->bindValue(5, $bilan, PDO::PARAM_STR);
+
+        if ($stmt->execute()) {
+            $idRapport = $this->db->lastInsertId(); // Récupérez l'ID du rapport créé
+
+            // Pour chaque médicament sélectionné, créez une ordonnance
+            foreach ($selectedMedicaments as $medicamentId) {
+                $quantity = $quantities[$medicamentId];
+
+                // Créez l'ordonnance
+                $this->createOrdonnance($idRapport, $medicamentId, $quantity);
+            }
+
+            $this->db->commit(); // Validez la transaction
+            return $idRapport; // Retournez l'ID du rapport créé
+        } else {
+            $this->db->rollBack(); // Annulez la transaction en cas d'échec
+            return false;
+        }
+    } catch (Exception $e) {
+        $this->db->rollBack(); // En cas d'exception, annulez la transaction
+        return false;
+    }
+}
+
+// Méthode pour ajouter une ordonnance
+public function createOrdonnance($idRapport, $idMedicament, $quantity) {
+    $stmt = $this->db->prepare("INSERT INTO ordonnance (idrapport, idmedicament, quantite) VALUES (?, ?, ?)");
+
+    // Lier les valeurs
+    $stmt->bindValue(1, $idRapport, PDO::PARAM_INT);
+    $stmt->bindValue(2, $idMedicament, PDO::PARAM_INT);
+    $stmt->bindValue(3, $quantity, PDO::PARAM_INT);
+
+    return $stmt->execute(); // Retourne vrai si l'insertion réussit, sinon faux
+}
+
     
 }
+
+
 ?>
 
