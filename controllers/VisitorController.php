@@ -42,8 +42,11 @@ class VisiteurController {
             $dpartement = $_POST['dpartement'];
             $pays = $_POST['pays'];
     
+            // Récupération du rôle
+            $role = $_POST['role'];
+    
             // Effectuer l'inscription
-            $registrationResult = $this->model->register($name, $surname, $tel, $email, $rue, $codepostal, $ville, $dpartement, $pays, $password);
+            $registrationResult = $this->model->register($name, $surname, $tel, $email, $rue, $codepostal, $ville, $dpartement, $pays, $password, $role);
             var_dump($registrationResult); // Vérifie le résultat de l'inscription
     
             if ($registrationResult) {

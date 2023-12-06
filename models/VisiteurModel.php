@@ -27,7 +27,7 @@ class VisiteurModel {
         }
     }
 
-    public function register($name, $surname, $tel, $email, $rue, $codepostal, $ville, $dpartement, $pays, $password) {
+    public function register($name, $surname, $tel, $email, $rue, $codepostal, $ville, $dpartement, $pays, $password, $role) {
         try {
             $this->db->beginTransaction();
     
@@ -51,6 +51,15 @@ class VisiteurModel {
                 throw new Exception("Erreur lors de la création du visiteur.");
             }
     
+
+
+
+            $stmtRole = $this->db->prepare("INSERT INTO role (idpersonne, role) VALUES (?, ?)");
+        if (!$stmtRole->execute([$idpersonne, $role])) {
+            throw new Exception("Erreur lors de l'attribution du rôle.");
+        }
+
+
             $this->db->commit();
             return true;
         } catch (Exception $e) {

@@ -7,8 +7,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST['password'];
 
     try {
-        $query = $dbConnection->prepare("SELECT visiteur.id, personne.name, personne.surname, visiteur.password FROM visiteur JOIN personne ON visiteur.idpersonne = personne.id WHERE personne.email = :email");
-
+        $query = $dbConnection->prepare("SELECT visiteur.id, personne.name, personne.surname, visiteur.password, role.role 
+                                        FROM visiteur 
+                                        JOIN personne ON visiteur.idpersonne = personne.id 
+                                        LEFT JOIN role ON personne.id = role.idpersonne
+                                        WHERE personne.email = :email");
 
         $query->execute(['email' => $email]);
         $user = $query->fetch(PDO::FETCH_ASSOC);
@@ -17,6 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['userId'] = $user['id'];
             $_SESSION['userName'] = $user['name']; // Ajouter le nom de l'utilisateur
             $_SESSION['userSurname'] = $user['surname']; // Ajouter le prénom de l'utilisateur
+            $_SESSION['userRole'] = $user['role']; // Ajouter le rôle de l'utilisateur
             header("Location: ../views/bienvenue.php");
             exit;
         } else {
@@ -29,6 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     header("Location: ../views/login.html");
     exit;
 }
+
 ?>
 
 

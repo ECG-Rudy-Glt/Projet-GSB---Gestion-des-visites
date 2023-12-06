@@ -19,6 +19,9 @@
  // Récupérer le nom et le prénom de l'utilisateur depuis la session
  $nom = $_SESSION['userName'] ?? 'Inconnu';
  $prenom = $_SESSION['userSurname'] ?? 'Inconnu';
+
+ $role = $_SESSION['userRole'] ?? 'Inconnu';
+
  ?>
  
  <!DOCTYPE html>
@@ -40,5 +43,18 @@
 	<form action="selectReportDate.php" method="post">
 		<input type="submit" value="Modifier un Rapport">
 	</form>
- </body>
- </html>
+
+
+
+
+	<!-- Condition pour afficher le bouton Statistiques -->
+	<?php if ($role === 'Service Commercial'): ?>
+			<form action="statistiques.php" method="post">
+				<input type="submit" value="Statistiques">
+			</form>
+		<?php endif; ?>
+
+
+
+</body>
+</html>
