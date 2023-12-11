@@ -115,7 +115,16 @@ public function createOrdonnance($idRapport, $idMedicament, $quantity) {
         }
         return true;
     }
+    public function saveOrdonnance($idRapport, $selectedMedicament, $quantity) {
+        $stmt = $this->db->prepare("INSERT INTO ordonnance (idrapport, idmedicament, quantite) VALUES (?, ?, ?)");
     
+        // Lier les valeurs
+        $stmt->bindValue(1, $idRapport, PDO::PARAM_INT);
+        $stmt->bindValue(2, $selectedMedicament, PDO::PARAM_INT);
+        $stmt->bindValue(3, $quantity, PDO::PARAM_INT);
+    
+        return $stmt->execute(); // Retourne vrai si l'insertion réussit, sinon faux
+    }
 }
 
 

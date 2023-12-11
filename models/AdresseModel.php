@@ -14,7 +14,7 @@ class AdresseModel {
 	 private $db;
 	 
 	 public function __construct($dbConnection) {
-		 $this->db = $db;
+		 $this->db = $dbConnection;
 	 }
  
 	 // Create a new address
