@@ -1,17 +1,16 @@
 <?php
-session_start(); // Démarrage de la session
-require_once '../config.php'; // Assurez-vous que le chemin est correct
+session_start(); // Démarrage de la session pour stocker les données utilisateur.
 
+require_once '../config.php'; // Inclusion du fichier de configuration de la base de données.
+
+// Vérifie si le formulaire a été soumis par la méthode POST.
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+    $email = $_POST['email']; // Récupère l'email envoyé par le formulaire.
+    $password = $_POST['password']; // Récupère le mot de passe envoyé par le formulaire.
 
     try {
-        $query = $dbConnection->prepare("SELECT visiteur.id, personne.name, personne.surname, visiteur.password, role.role 
-                                        FROM visiteur 
-                                        JOIN personne ON visiteur.idpersonne = personne.id 
-                                        LEFT JOIN role ON personne.id = role.idpersonne
-                                        WHERE personne.email = :email");
+        $query = $dbConnection->prepare("SELECT visiteur.id, personne.name, personne.surname, visiteur.password FROM visiteur JOIN personne ON visiteur.idpersonne = personne.id WHERE personne.email = :email");
+
 
         $query->execute(['email' => $email]);
         $user = $query->fetch(PDO::FETCH_ASSOC);
@@ -20,7 +19,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['userId'] = $user['id'];
             $_SESSION['userName'] = $user['name']; // Ajouter le nom de l'utilisateur
             $_SESSION['userSurname'] = $user['surname']; // Ajouter le prénom de l'utilisateur
-            $_SESSION['userRole'] = $user['role']; // Ajouter le rôle de l'utilisateur
             header("Location: ../views/bienvenue.php");
             exit;
         } else {
@@ -35,5 +33,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 ?>
-
-

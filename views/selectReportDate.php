@@ -25,6 +25,7 @@ $userId = $_SESSION['userId']; // Récupérer l'ID de l'utilisateur connecté
 </head>
 <body>
     <div class="container">
+        <a href="./bienvenue.php" class="btn-home">Retour sur la page de bienvenue</a>
         <h1>Sélectionnez une Date de Rapport</h1>
         <form action="listReports.php" method="post">
             <input type="date" name="date" required>

@@ -33,8 +33,9 @@ if (!$report) {
 <head>
     <meta charset="UTF-8">
     <title>Modifier Rapport</title>
-    <!-- Incluez votre CSS ici. -->
+    <link rel="stylesheet" type="text/css" href="../views/style css/editreport.css">
 </head>
+
 <body>
     <h1>Modifier le Rapport</h1>
     <form action="../controllers/updateReport.php" method="post">
@@ -46,10 +47,8 @@ if (!$report) {
         <label for="bilan">Bilan:</label>
         <textarea id="bilan" name="bilan" required><?php echo htmlspecialchars($report['bilan']); ?></textarea>
 
-        <label for="date">Date:</label>
-        <input type="date" id="date" name="date" value="<?php echo htmlspecialchars($report['date']); ?>" required>
 
-        <!-- Ajoutez tous les champs supplémentaires que vous pourriez avoir. -->
+        <!-- Ajout de tous les champs supplémentaires -->
 
         <input type="submit" value="Enregistrer les modifications">
     </form>

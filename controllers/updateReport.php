@@ -19,14 +19,12 @@ $rapportModel = new RapportModel($dbConnection);
 	 $motif = $_POST['motif'];
 	 $bilan = $_POST['bilan'];
  
-	 // Valider et nettoyer les données comme nécessaire
- 
 	 // Mettre à jour le rapport
 	 $success = $rapportModel->updateReport($id, $motif, $bilan);
  
 	 if ($success) {
 		 // Rediriger vers la liste des rapports avec un message de succès
-		 header('Location: ../views/listReports.php');
+		 header('Location: ../views/selectReportDate.php');
 	 } else {
 		 // Gérer l'erreur
 		 echo "Une erreur est survenue lors de la mise à jour du rapport.";
