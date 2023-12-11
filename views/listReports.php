@@ -26,12 +26,12 @@ $reports = $rapportModel->getReportsByDate($userId, $date);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rapports du <?php echo htmlspecialchars($date); ?></title>
-    <link rel="stylesheet" href="style css/listReports.css">
+    <link rel="stylesheet" href="../views/style css/listReports.css">
 </head>
 <body>
     <div class="container">
+    <a href="./bienvenue.php" class="btn-home">Retour sur la page de bienvenue</a>
         <h1>Rapports du <?php echo htmlspecialchars($date); ?></h1>
-
         <?php foreach ($reports as $report): ?>
             <div class="report">
                 <p>Médecin: <?php echo htmlspecialchars($report['name']) . " " . htmlspecialchars($report['surname']); ?></p>
