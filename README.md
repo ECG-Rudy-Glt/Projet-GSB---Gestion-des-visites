@@ -1,65 +1,173 @@
-# Projet-GSB---Gestion-des-visites
+# Rapport de Projet BTS SIO - Gestion des Visites GSB  
 
-Présentation du contexte
-L'activité à gérer
-L'activité commerciale d'un laboratoire pharmaceutique est principalement réalisée par les visiteurs médicaux. En effet, un médicament remboursé par la sécurité sociale n’est jamais vendu directement au consommateur mais prescrit au patient par son médecin.
-Toute communication publicitaire sur les médicaments remboursés est d'ailleurs interdite par la loi. Il est donc important, pour l’industrie pharmaceutique, de promouvoir ses produits directement auprès des praticiens.
+ 
 
-Les Visiteurs Médicaux
-L'activité des visiteurs médicaux consiste à visiter régulièrement les médecins généralistes, spécialistes, les services hospitaliers ainsi que les infirmiers et pharmaciens pour les tenir au courant de l’intérêt de leurs produits et des nouveautés du laboratoire.
-Chaque visiteur dispose d’un portefeuille de praticiens, de sorte que le même médecin ne reçoit jamais deux visites différentes du même laboratoire.
-Comme tous les commerciaux, ils travaillent par objectifs définis par la hiérarchie et reçoivent en conséquence diverses primes et avantages.
-Pour affiner la définition des objectifs et l’attribution des budgets, il sera nécessaire d’informatiser les comptes rendus de visite.
+## Résumé  du projet 
 
-L’activité des visiteurs
-L'activité est composée principalement de visites réalisées auprès d’un praticien (médecin dans son cabinet, à l’hôpital, pharmacien, chef de clinique...). On souhaite en connaître la date, le motif (6 motifs sont fixés au préalable) et savoir, pour chaque visite, les médicaments présentés et le nombre d’échantillons offerts. Le bilan fourni par le visiteur (le médecin a paru convaincu ou pas, une autre visite a été planifiée...) devra aussi être enregistré.
+Dans le cadre de notre formation BTS Services Informatiques aux Organisations, notre équipe de trois, réduite finalement à deux, a entrepris de développer une application web pour le sénario fictif d’un laboratoire GSB afin de numériser le processus de gestion des visites médicales. 
 
-Les produits
-Les produits distribués par le laboratoire sont des médicaments : ils sont identifiés par un numéro de produit (dépôt légal) qui correspond à un nom commercial (ce nom étant utilisé par les visiteurs et les médecins).
-Comme tout médicament, un produit a des effets thérapeutiques et des contre-indications.
-On connait sa composition (liste des composants et quantité) et les interactions qu'il peut avoir avec d'autres médicaments (éléments nécessaires à la présentation aux médecins).
-La posologie (quantité périodique par type d’individu : adulte, jeune adulte, enfant, jeune enfant ou nourrisson) dépend de la présentation et du dosage.
-Un produit relève d’une famille (antihistaminique, antidépresseur, antibiotique, ...).
-Lors d'une visite auprès d'un médecin, un visiteur présente un ou plusieurs produits pour lesquels il pourra laisser des échantillons.
+L'application a été conçue en utilisant PHP et le modèle d'architecture MVC, avec l'objectif d'améliorer l'efficacité des visiteurs médicaux en leur permettant de créer, modifier et consulter des rapports de visite sur une interface numérique. Ce projet a impliqué une planification méticuleuse, une gestion agile des tâches, et un développement itératif avec des phases de tests rigoureux. En dépit de quelques obstacles, notamment une réduction des ressources humaines, le projet a été mené à terme avec succès, fournissant une solution fonctionnelle qui promet d'augmenter la productivité et la précision des données pour GSB.  
 
-Les médecins
-Les médecins sont le cœur de cible des laboratoires. Aussi font-ils l’objet d’une attention toute particulière.
-Pour tenir à jour leurs informations, les laboratoires achètent des fichiers à des organismes spécialisés qui donnent les diverses informations d’état civil et la spécialité complémentaire.
+ 
 
-L’application à réaliser
-L’entreprise envisage de permettre aux visiteurs de gérer ses visites par l’intermédiaire de son smartphone ou de sa tablette. L’application devrait permettre de réaliser les cas d’utilisation suivants :
+## Introduction  
+
+ 
+
+Ce rapport documente le développement de l'application de gestion des visites pour le laboratoire GSB. Réalisé dans le cadre du BTS Services Informatiques aux Organisations, ce projet a pour but de créer une solution pour les visiteurs médicaux afin de numériser et optimiser leurs activités quotidiennes. 
+
+## Objectifs du projet 
+
+  
+
+- Développer une application en PHP suivant l'architecture MVC. 
+
+- Permettre aux visiteurs médicaux de gérer leurs visites et rapports de manière numérique. 
+
+- Améliorer l'efficacité des suivis de visite.
 
 
-Cas : gérer les rapports de visite
-Scénario classique
-        1) Le visiteur demande à créer un nouveau rapport de visite
-        2) Le système retourne un formulaire avec la liste des médecins et des champs de saisie
-        3) Le visiteur sélectionne un médecin à partir de son début de nom, sélectionne la date et remplit
-        les différents champs, sélectionne les médicaments et les quantités offertes et valide
-        4) Le système enregistre le rapport
-        Scénario étendu : modification d’un rapport
-        5) Le visiteur demande à modifier un rapport
-        6) Le système retourne un formulaire avec une date à sélectionner
-        7) Le visiteur sélectionne la date
-        8) Le système retourne les rapports que le visiteur a effectués à cette date
-        9) Le visiteur sélectionne un rapport de visite
-        10) Le système retourne les informations déjà saisies concernant le motif et le bilan
-        11) Le visiteur modifie les informations
-        12) Le système enregistre les modifications
-        Scénario alternatif
-        4.1) Des champs ne sont pas remplis, le système en informe le visiteur, retour à 3
+## Méthodologie 
 
-Cas : gérer les médecins
-Scénario classique
-    1) Le visiteur demande à voir les informations concernant un médecin
-    2) Le système retourne un formulaire avec un champ de recherche du médecin
-    3) Le visiteur sélectionne un médecin à partir de son début de nom et valide
-    4) Le système retourne les informations personnelles concernant ce médecin
-Scénario étendu :
-    5) Le visiteur clique sur l’adresse de messagerie du médecin
-    6) Le système permet la rédaction et l’envoi d’un courriel
-    7) Le visiteur demande à voir tous les anciens rapports de visite concernant ce médecin
-    8) Le système retourne tous ses rapports
-    9) Le visiteur demande à modifier certains champs concernant des informations du médecin
-    10) Le système enregistre ces modifications
+  
+
+Pour mener à bien ce projet, nous avons adopté une méthode de travail Agile, en utilisant le tableau Kanban pour la gestion des tâches et le diagramme de Gantt pour la planification temporelle. 
+
+  
+
+![Tableau Kanban](/assets/Kanban.png) 
+
+*Figure 1: Tableau Kanban Agile utilisé pour le projet.* 
+
+
+Nous avons utilisé Git afin de suivre notre projet et de mettre en commun les informations.
+
+![Github Dektop](/assets/github%20.png)  
+
+*Figure 2: Github desktop pour le suivi de projet*
+
+
+![Diagramme de Gantt](/assets/Gant.png) 
+
+*Figure 3: Diagramme de Gantt illustrant la planification du projet.* 
+
+ 
+
+ 
+
+ 
+
+## Conception de la Base de Données 
+
+  
+
+L'un des aspects clés de notre projet était la conception d'une base de données robuste et efficace. Nous avons commencé avec un MCD de base qui nous a été fourni au début du projet. Au cours du développement, nous avons identifié plusieurs domaines d'amélioration qui nous ont permis d'optimiser notre modèle. 
+
+  
+
+### Modèle Conceptuel de Données Initial 
+
+  
+
+![Modèle Conceptuel de Données Initial](/assets/oldMcd.png) 
+
+*Figure 4: Le Modèle Conceptuel de Données initial fourni pour le projet.* 
+
+  
+
+### Améliorations apportées 
+
+  
+
+Nous avons apporté plusieurs modifications pour améliorer la structure et les relations de la base de données. Ces changements ont inclus l'ajout de nouvelles entités, la modification des attributs pour une meilleure normalisation, et l'ajustement des relations pour faciliter les requêtes et améliorer les performances. 
+
+  
+
+![Modèle Conceptuel de Données Amélioré](/assets/mcd.png) 
+
+*Figure 5: Le Modèle Conceptuel de Données amélioré développé par notre équipe.* 
+
+  
+
+Les modifications spécifiques que nous avons apportées incluent :
+
+- **Normalisation des adresses** : Création de l'entité `GSB_adresse` pour séparer les adresses dans une table distincte, éliminant ainsi les données redondantes et facilitant la gestion des mises à jour.
+
+- **Introduction de la table `GSB_specialite`** : Ajout d'une nouvelle table pour gérer les spécialités médicales, permettant une association plus structurée des médecins avec leurs spécialités.
+
+- **Refonte de la relation entre médecins et visiteurs** : Établissement d'une relation directe entre les médecins et les visiteurs via la table `GSB_rapport`, pour un suivi simplifié des interactions.
+
+- **Sécurisation des authentifications** : Dans la table `GSB_visiteur`, ajout de champs pour le mot de passe et le sel, renforçant la sécurité des données d'authentification.
+
+- **Gestion des ordonnances** : Création de la table `GSB_ordonnance` pour lier les rapports aux médicaments prescrits, reflétant une meilleure gestion des données médicales.
+
+- **Amélioration des informations médicamenteuses** : Enrichissement de la table `GSB_medicament` avec des détails sur la composition, les effets et les contre-indications des produits.
+
+- **Optimisation des clés** : Amélioration de la structure des clés primaires et étrangères pour assurer une intégrité référentielle robuste à travers la base de données.
+
+Ces améliorations structurelles ont permis d'augmenter la flexibilité, la sécurité, et l'efficacité de la gestion des données, tout en préparant la base pour une éventuelle montée en charge et des besoins futurs en évolution.
+
+ 
+
+ 
+
+  
+
+## Développement 
+
+  
+
+### Backend 
+
+  
+
+Le backend de l'application a été développé en PHP en suivant le modèle MVC. Les fonctionnalités implémentées incluent l'authentification, la gestion des rapports de visite, et la manipulation des données médicales. 
+
+  
+
+![Screenshot du code PHP MVC](/assets/MVC.png) 
+
+*Figure 6: Exemple de code backend PHP MVC.* 
+
+  
+
+### Frontend 
+
+  
+
+Le frontend a été conçu pour offrir une expérience utilisateur fluide et intuitive, en utilisant HTML, CSS. 
+
+  
+
+![Capture d'écran de l'interface](/assets/front.png) 
+
+*Figure 7: Capture d'écran de l'interface utilisateur de l'application.* 
+
+  
+
+## Tests 
+
+  
+
+Des tests ont été effectués à la fois pour le backend et le frontend pour assurer la fiabilité de l'application. 
+
+  
+
+## Conclusion 
+
+  
+
+Le projet a réussi à fournir une solution efficace pour la gestion des visites médicales. Malgré quelques défis, notamment la réduction de l'équipe de travail, l'application répond aux besoins exprimés par GSB. 
+
+  
+
+## Annexes 
+
+  
+ 
+
+![Cahier des charges page 1](/assets/gsb1.png) 
+![Cahier des charges page 2](/assets/gsb2.png) 
+![Cahier des charges page 3](/assets/gsb3.png) 
+
 
